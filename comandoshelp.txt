@@ -1,0 +1,30 @@
+PARA EL INICIO CON django
+
+virtualenv django_backrkg
+source django_backrkg/Scripts/activate
+pip install django
+
+NOTA: para cualquier comando se puede añadir al final el sub-comando --help para ver las opciones de ese comando
+
+
+django-admin startproject <nombre_proyecto> => inicializar un nuevo proyecto en django
+
+python manage.py startapp <nombre_app> => inicia una nueva aplicacion dentro del proyecto
+
+python manage.py runserver => levanta el proyecto de django
+
+python manage.py showmigrations => muestra todas las migraciones y las que no se ejecutaron en la bd no estaran seleccionadas
+
+python manage.py migrate <nombre_app> => ejecutara todas las migraciones pendientes en la bd
+
+python manage.py makemigrations <nombre_app> --name <nombre_migracion> => creara una nueva migracion en relacion al contenido actual de nuestros modelos
+
+python manage.py sqlmigrate <nombre_app> <nombre_migracion> => nos dara el comando sql de la determinada migracion
+
+python manage.py createsuperuser => crea un super usuario para acceder al panel administrativo
+
+python manage.py dbshell => usara las credenciales de nuestro proyecto para conectarnos a la bd del proyecto
+
+python manage.py shell => inicializa un playground de python para poder usar todas las librerias y archivos del proyecto
+
+python manage.py test => correra todos los archivos test.py que tengamos en el proyecto, adicional a ello si queremos ver un mayor grado de detalle de los test podemos usar el flag verbosity y con valores del 0 al 3 siendo 0 el menor detalle y 3 el maximo detalle
