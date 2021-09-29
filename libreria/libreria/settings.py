@@ -10,7 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+
 from pathlib import Path
+from os import environ
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3v2l-4^0h@n^u^cy3l&o6b2b!_(u5c1-v2-of(-sln81)e(wm_'
+SECRET_KEY = 'django-insecure-ihcx567p$-8@v01^gyd*!9_%1-g@1cz^9dfjw_knuz_m*uvc7!'
+#SECRET_KEY = 'django-insecure-qc-i+k%6w0ar05g700mwt8ioq_%tv%2vx)y(ejchft49_#9ipl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'gestion',
 ]
 
 MIDDLEWARE = [
@@ -73,10 +80,18 @@ WSGI_APPLICATION = 'libreria.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': environ.get('DB_HOST'),
+        'NAME': environ.get('DB_NAME'),
+        'PASSWORD': environ.get('DB_PASSWORD'),
+        'PORT': environ.get('DB_PORT'),
+        'USER': environ.get('DB_USERNAME'),
+        'TEST': {
+            'NAME': environ.get('DB_TEST')
+        }
     }
 }
 
@@ -103,9 +118,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Lima'
 
 USE_I18N = True
 
@@ -123,3 +138,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"

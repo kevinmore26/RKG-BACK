@@ -13,6 +13,10 @@ python manage.py startapp <nombre_app> => inicia una nueva aplicacion dentro del
 
 python manage.py runserver => levanta el proyecto de django
 
+
+#
+python -m pip install python-dotenv
+#
 python manage.py showmigrations => muestra todas las migraciones y las que no se ejecutaron en la bd no estaran seleccionadas
 
 python manage.py migrate <nombre_app> => ejecutara todas las migraciones pendientes en la bd
