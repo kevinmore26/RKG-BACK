@@ -1,15 +1,15 @@
 from django.db.models.deletion import CASCADE
-from libreria import gestion
+
 from django.db import models
 
-# Create your models here.
+
 
 class PerfilModel(models.Model):
     perfilId = models.AutoField(
         primary_key=True,null=False,unique=True,db_column='id'
     )
     perfilNick = models.CharField(
-        max_length=45,db_column='nick'
+        db_column='nick',max_length=19
     )
 
 class ClienteModel(models.Model):
@@ -17,17 +17,17 @@ class ClienteModel(models.Model):
         primary_key=True, null= False, unique= True, db_column='id'
     )
     clienteNombre = models.CharField(
-        max_length=45, db_column='nombre'
+         db_column='nombre',max_length=19
     )
     clienteDocumento = models.CharField(
-        max_length=45, db_column='documento'
+         db_column='documento',max_length=8
     )
-    clienteCelular = models.AutoField(
-        primary_key=False, null=True,unique=True,db_column='celular'
+    clienteCelular = models.IntegerField(
+        null=True,unique=True,db_column='celular'
     )
-    # perfilCliente = models.ForeignKey(
-    #      'PerfilModel', on_delete=models.CASCADE
-    # )
+    perfilCliente = models.CharField(
+         db_column='PerfilModel',max_length=19
+    )
     
 class ProductoModel(models.Model):
 
