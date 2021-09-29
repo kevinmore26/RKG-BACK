@@ -1,8 +1,7 @@
 from django.db.models.deletion import CASCADE
-# from libreria import gestion
 from django.db import models
 
-# Create your models here.
+
 
 class PerfilModel(models.Model):
     perfilId = models.AutoField(
