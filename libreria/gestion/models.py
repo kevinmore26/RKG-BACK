@@ -1,5 +1,5 @@
 from django.db.models.deletion import CASCADE
-from libreria import gestion
+# from libreria import gestion
 from django.db import models
 
 # Create your models here.
@@ -9,7 +9,7 @@ class PerfilModel(models.Model):
         primary_key=True,null=False,unique=True,db_column='id'
     )
     perfilNick = models.CharField(
-        max_length=45,db_column='nick'
+        db_column='nick',max_length=19
     )
 
 class ClienteModel(models.Model):
@@ -17,17 +17,17 @@ class ClienteModel(models.Model):
         primary_key=True, null= False, unique= True, db_column='id'
     )
     clienteNombre = models.CharField(
-        max_length=45, db_column='nombre'
+         db_column='nombre',max_length=19
     )
     clienteDocumento = models.CharField(
-        max_length=45, db_column='documento'
+         db_column='documento',max_length=8
     )
-    clienteCelular = models.AutoField(
-        primary_key=False, null=True,unique=True,db_column='celular'
+    clienteCelular = models.IntegerField(
+        null=True,unique=True,db_column='celular'
     )
-    # perfilCliente = models.ForeignKey(
-    #      'PerfilModel', on_delete=models.CASCADE
-    # )
+    perfilCliente = models.CharField(
+         db_column='PerfilModel',max_length=19
+    )
     
 class ProductoModel(models.Model):
 
@@ -44,7 +44,7 @@ class ProductoModel(models.Model):
         primary_key=True, null=False, unique=True, db_column='id')
 
     productoNombre = models.CharField(
-      max_length=45, db_column='nombre', null=False)
+      db_column='nombre', null=False, max_length=14)
 
     productoPrecio = models.DecimalField(max_digits=5, decimal_places=2, db_column='precio')
 
@@ -73,8 +73,8 @@ class OrdenCabeceraModel(models.Model):
         choices=OpcionesTipo.choices, db_column='tipo', null=False)
 
     # ------------------------
-    # clientes = models.ForeignKey(to=ClienteModel, db_column='clientes_id',
-    #                              null=False, related_name='clienteCabeceras', on_delete=models.PROTECT)
+    clientes = models.ForeignKey(to=ClienteModel, db_column='clientes_id',
+                                 null=False, related_name='clienteCabeceras', on_delete=models.PROTECT)
 
     class Meta:
         db_table = 'cabecera_operaciones'
@@ -87,15 +87,15 @@ class OrdenDetalleModel(models.Model):
         db_column='id', primary_key=True, unique=True, null=False)
 
     ordenDetalleCantidad = models.IntegerField(db_column='cantidad', null=False)
-
+    
     ordenDetalleImporte = models.DecimalField(
         max_digits=5, decimal_places=2, db_column='importe', null=False)
     # CAMBIAR RELATED_NAME
-    # productos = models.ForeignKey(to=ProductoModel, db_column='productos_id',
-    #                               on_delete=models.PROTECT, related_name='productoDetalles', null=False)
+    productos = models.ForeignKey(to=ProductoModel, db_column='productos_id',
+                                  on_delete=models.PROTECT, related_name='productoDetalles', null=False)
     
-    # cabeceras = models.ForeignKey(to=CabeceraModel, db_column='cabecera_operaciones_id',
-    #                               on_delete=models.PROTECT, related_name='cabeceraDetalles', null=False)
+    cabeceras = models.ForeignKey(to=OrdenCabeceraModel, db_column='cabecera_operaciones_id',
+                                  on_delete=models.PROTECT, related_name='cabeceraDetalles', null=False)
 
     class Meta:
         db_table = 'detalle_operaciones'
