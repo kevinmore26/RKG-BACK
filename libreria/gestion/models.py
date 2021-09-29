@@ -1,8 +1,7 @@
-# from django.db.models.deletion import CASCADE
-# from libreria import gestion
+from django.db.models.deletion import CASCADE
 from django.db import models
 
-# Create your models here.
+
 
 class PerfilModel(models.Model):
     perfilId = models.AutoField(
@@ -35,8 +34,6 @@ class ClienteModel(models.Model):
         db_table = 'clientes'
         verbose_name = 'cliente'
         verbose_name_plural = 'clientes'
-
-
 class ProductoModel(models.Model):
 
     class OpcionesUM(models.TextChoices):
@@ -112,8 +109,6 @@ class DetalleModel(models.Model):
         db_table = 'detalle_operaciones'
         verbose_name = 'detalle'
         verbose_name_plural = 'detalles'
-
-
 class AdopcionModel(models.Model):
 
     class OpcionesUM(models.TextChoices):
