@@ -120,11 +120,11 @@ class AdopcionModel(models.Model):
 
     adopcionNombre = models.CharField(
       db_column='nombre', null=False, max_length=14)
-
+    
     adopcionEdad = models.IntegerField(null=True,unique=True,db_column='edad')
 
     adopcionTamaño = models.TextField(
-        choices=OpcionesUM.choices, default=OpcionesUM.MEDIANO, db_column='tamaño')
+        choices=OpcionesUM.choices, default=OpcionesUM.MEDIANO, db_column='tamanio')
     
     adopcionCaracteristicas = models.CharField(
       db_column='caracteristicas', null=False, max_length=100)
@@ -135,11 +135,11 @@ class AdopcionModel(models.Model):
     #     on_delete=models.CASCADE,
     #     primary_key=True,
     # )
-    clientes = models.OneToOneField(to=ClienteModel,db_column='cliente_id',
-                                  on_delete=models.CASCADE,related_name='clienteAdopcion', null=False)
+    clientes = models.ForeignKey(to=ClienteModel,db_column='cliente_id',
+                                  on_delete=models.PROTECT,related_name='clienteAdopcion',null=True, blank=True)
 
     class Meta:
-       
+        
         db_table='adopciones'
         ordering = ['-adopcionTamaño']
         verbose_name = 'adopcion'
