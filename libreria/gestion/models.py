@@ -38,9 +38,7 @@ class ProductoModel(models.Model):
 
     class OpcionesUM(models.TextChoices):
         UNIDADES = 'UN', 'UNIDADES' 
-        DOCENA = 'DOC', 'DOCENA' 
-        CIENTO = 'CI', 'CIENTO' 
-        MILLAR = 'MI', 'MILLAR' 
+        
 
 
     # Tipos de datos del ORM => https://docs.djangoproject.com/en/3.2/ref/models/fields/#field-types
@@ -55,6 +53,10 @@ class ProductoModel(models.Model):
 
     productoUnidadMedida = models.TextField(
         choices=OpcionesUM.choices, default=OpcionesUM.UNIDADES, db_column='unidad_medida')
+
+    productoDescripcion = models.CharField(
+        db_column='descripcion', null=False, max_length=100)
+    
 
     class Meta:
         """Link de documentacion https://docs.djangoproject.com/en/3.2/ref/models/options/"""
