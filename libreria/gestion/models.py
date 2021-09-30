@@ -144,3 +144,4 @@ class AdopcionModel(models.Model):
         ordering = ['-adopcionTamaño']
         verbose_name = 'adopcion'
         verbose_name_plural = 'adopciones'
+        
