@@ -4,6 +4,6 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 
 class PruebaController(APIView):
-    def get(self, request):
+    def get(self, request, format=None):
         return {'message': 'Exito'}
 

@@ -37,7 +37,7 @@ class ClienteModel(models.Model):
 class ProductoModel(models.Model):
 
     class OpcionesUM(models.TextChoices):
-        UNIDADES = 'UN', 'UNIDADES' 
+        UNIDAD = 'UN', 'UNIDAD' 
         
 
 
@@ -47,16 +47,19 @@ class ProductoModel(models.Model):
         primary_key=True, null=False, unique=True, db_column='id')
 
     productoNombre = models.CharField(
-      db_column='nombre', null=False, max_length=14)
+      db_column='nombre', null=False, max_length=50, verbose_name='nombre')
 
-    productoPrecio = models.DecimalField(max_digits=5, decimal_places=2, db_column='precio')
+    productoPrecio = models.DecimalField(
+        max_digits=5, decimal_places=2, db_column='precio', verbose_name='precio')
 
     productoUnidadMedida = models.TextField(
-        choices=OpcionesUM.choices, default=OpcionesUM.UNIDADES, db_column='unidad_medida')
+        choices=OpcionesUM.choices, default=OpcionesUM.UNIDAD, db_column='unidad_medida', verbose_name='UnidadMedida')
 
     productoDescripcion = models.CharField(
-        db_column='descripcion', null=False, max_length=100)
+        db_column='descripcion', null=False, max_length=100, verbose_name='descripcion')
     
+    def __str__(self):
+        return self.productoNombre
 
     class Meta:
         """Link de documentacion https://docs.djangoproject.com/en/3.2/ref/models/options/"""
