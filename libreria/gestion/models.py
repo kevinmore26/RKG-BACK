@@ -121,7 +121,7 @@ class AdopcionModel(models.Model):
     adopcionNombre = models.CharField(
       db_column='nombre', null=False, max_length=14)
     
-    adopcionEdad = models.IntegerField(null=True,unique=True,db_column='edad')
+    adopcionEdad = models.IntegerField(null=True,db_column='edad')
 
     adopcionTamaño = models.TextField(
         choices=OpcionesUM.choices, default=OpcionesUM.MEDIANO, db_column='tamanio')
