@@ -119,7 +119,7 @@ class AdopcionesController(ListCreateAPIView):
                 "content": data.errors
             }, status=status.HTTP_400_BAD_REQUEST) 
 
-class AdopcionController(ListCreateAPIView):
+class AdopcionController(RetrieveUpdateDestroyAPIView):
     def get(self, request, id):
         
         adopcionEncontrada = AdopcionModel.objects.filter(
@@ -160,7 +160,7 @@ class AdopcionController(ListCreateAPIView):
                                 validated_data=serializador.validated_data)
             
             return Response(data={
-                "message": "Adopcion actualizado exitosamente",
+                "message": "Adopcion actualizada exitosamente",
                 "content": serializador.data
             })
         else:
@@ -179,12 +179,13 @@ class AdopcionController(ListCreateAPIView):
                 "message": "Adopcion no encontrado",
                 "content": None
             }, status=status.HTTP_404_NOT_FOUND)
-
-        
-        adopcionEncontrada.save()
+        try:
+            data=AdopcionModel.objects.filter(adopcionId=id).delete()
+            adopcionEncontrada.delete()
+        except Exception as e:
+            print(e)
 
         serializador = AdopcionSerializer(instance=adopcionEncontrada)
-
         return Response(data={
             "message": "Adopcion eliminado exitosamente",
             "content": serializador.data
