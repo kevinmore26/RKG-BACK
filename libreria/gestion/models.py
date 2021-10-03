@@ -58,6 +58,8 @@ class ProductoModel(models.Model):
     productoDescripcion = models.CharField(
         db_column='descripcion', null=False, max_length=100, verbose_name='descripcion')
     
+    productoEstado = models.BooleanField(db_column='estado', default=True, null=False)
+
     def __str__(self):
         return self.productoNombre
 
