@@ -1,10 +1,16 @@
 from rest_framework import serializers
 from .models import AdopcionModel, ProductoModel,DetalleModel,CabeceraModel
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.conf import settings
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+
 
 
 
 
 class AdopcionSerializer(serializers.ModelSerializer):
+    adopcionFoto=serializers.CharField(max_length=100)
     class Meta:
         model=AdopcionModel
 
@@ -45,3 +51,18 @@ class OperacionModelSerializer(serializers.ModelSerializer):
         model = CabeceraModel
         fields = '__all__'
         depth = 1
+
+
+class ImagenSerializer(serializers.Serializer):
+    archivo = serializers.ImageField(
+        max_length=50, use_url=True)
+
+    def save(self):
+        archivo: InMemoryUploadedFile = self.validated_data.get('archivo')
+
+        print(archivo.content_type)
+        print(archivo.name)
+        print(archivo.size)
+
+        ruta = default_storage.save(archivo.name, ContentFile(archivo.read()))
+        return settings.MEDIA_URL + ruta

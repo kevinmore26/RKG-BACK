@@ -128,6 +128,9 @@ class AdopcionModel(models.Model):
     
     adopcionCaracteristicas = models.CharField(
       db_column='caracteristicas', null=False, max_length=100)
+
+    adopcionFoto = models.ImageField(
+        upload_to='adopciones/', db_column='foto', null=True)
     
 
     # place = models.OneToOneField(

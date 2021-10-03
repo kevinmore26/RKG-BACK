@@ -10,7 +10,8 @@ from .models import CabeceraModel, DetalleModel, ProductoModel, ClienteModel,Ado
 from .serializers import (
                           OperacionSerializer,
                           OperacionModelSerializer,
-                          AdopcionSerializer)
+                          AdopcionSerializer,
+                          ImagenSerializer)
                         #   ProductoSerializer,
                         #   ClienteSerializer,
 from rest_framework import status
@@ -22,6 +23,9 @@ from django.db import transaction, Error
 from datetime import datetime
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
+from os import remove
+from django.db.models import ImageField
+from django.conf import settings
 
 
 
@@ -182,6 +186,7 @@ class AdopcionController(RetrieveUpdateDestroyAPIView):
         try:
             data=AdopcionModel.objects.filter(adopcionId=id).delete()
             adopcionEncontrada.delete()
+            remove(settings.MEDIA_ROOT / str(adopcionEncontrada.adopcionFoto))
         except Exception as e:
             print(e)
 
@@ -190,6 +195,26 @@ class AdopcionController(RetrieveUpdateDestroyAPIView):
             "message": "Adopcion eliminado exitosamente",
             "content": serializador.data
         })
+    
+class SubirImagenController(CreateAPIView):
+    serializer_class = ImagenSerializer
 
+    def post(self, request: Request):
+        print(request.FILES)
+        data = self.serializer_class(data=request.FILES)
+
+        if data.is_valid():
+            archivo = data.save()
+            url = request.META.get('HTTP_HOST')
+
+            return Response(data={
+                'message': 'Archivo subido exitosamente',
+                'content': url + archivo
+            }, status=status.HTTP_201_CREATED)
+        else:
+            return Response(data={
+                'message': 'Error al crear el archivo',
+                'content': data.errors
+            }, status=status.HTTP_400_BAD_REQUEST)    
     
 

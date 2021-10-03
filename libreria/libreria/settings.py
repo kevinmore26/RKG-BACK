@@ -141,3 +141,6 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
+
+MEDIA_URL = '/assets/'
+MEDIA_ROOT = BASE_DIR / 'media'

@@ -3,7 +3,8 @@ from .views import (
                     OperacionController,
                     OperacionesController,
                     AdopcionesController,
-                    AdopcionController)
+                    AdopcionController,
+                    SubirImagenController)
                     
 
 urlpatterns = [
@@ -12,6 +13,7 @@ urlpatterns = [
     path('operacion/<int:id>', OperacionesController.as_view()),
     path('adopciones/', AdopcionesController.as_view()),
     path('adopcion/<int:id>', AdopcionController.as_view()),
+    path('subir-imagen', SubirImagenController.as_view()),
    
 ]
 
