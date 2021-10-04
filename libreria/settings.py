@@ -14,6 +14,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from os import environ
 from dotenv import load_dotenv
+from datetime import timedelta
+
 
 load_dotenv()
 
@@ -44,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gestion',
+    'rest_framework',
+    'facturacion'    
 ]
 
 MIDDLEWARE = [
@@ -133,10 +137,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+SIMPLE_JWT = {
+    'USER_ID_FIELD': 'clienteId',
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1)
+}
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
+
+MEDIA_URL = '/assets/'
+MEDIA_ROOT = BASE_DIR / 'media'
