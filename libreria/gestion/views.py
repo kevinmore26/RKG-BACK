@@ -26,15 +26,15 @@ class ProductosController(ListCreateAPIView):
 
     #Todo comentado para que funcione la paginacion / desactivar para que funcione listado de productos
 
-    # def get(self, request):
-    #     respuesta = self.get_queryset().filter(productoEstado=True).all()
-    #     print(respuesta)
-    #     respuesta_serializada = self.serializer_class(
-    #         instance=respuesta, many=True)
-    #     return Response(data={
-    #         "message": None,
-    #         "content": respuesta_serializada.data
-    #     })
+    def get(self, request):
+        respuesta = self.get_queryset().filter(productoEstado=True).all()
+        print(respuesta)
+        respuesta_serializada = self.serializer_class(
+            instance=respuesta, many=True)
+        return Response(data={
+            "message": None,
+            "content": respuesta_serializada.data
+        })
     
     def post(self, request: Request):
         print(request.data)
