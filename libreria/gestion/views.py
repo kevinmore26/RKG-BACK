@@ -6,6 +6,7 @@ from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIVie
 from .models import ProductoModel
 from .serializers import ProductoSerializer
 from rest_framework import status
+from .utils import  PaginacionPersonalizada
  
 
 class PruebaController(APIView):
@@ -20,16 +21,19 @@ class ProductosController(ListCreateAPIView):
     # pondremos la consulta de ese modelo en la bd
     queryset = ProductoModel.objects.all() #SELECT * FROM productos;
     serializer_class = ProductoSerializer
+    pagination_class = PaginacionPersonalizada
 
-    def get(self, request):
-        respuesta = self.get_queryset().filter(productoEstado=True).all()
-        print(respuesta)
-        respuesta_serializada = self.serializer_class(
-            instance=respuesta, many=True)
-        return Response(data={
-            "message": None,
-            "content": respuesta_serializada.data
-        })
+    #Todo comentado para que funcione la paginacion / desactivar para que funcione listado de productos
+
+    # def get(self, request):
+    #     respuesta = self.get_queryset().filter(productoEstado=True).all()
+    #     print(respuesta)
+    #     respuesta_serializada = self.serializer_class(
+    #         instance=respuesta, many=True)
+    #     return Response(data={
+    #         "message": None,
+    #         "content": respuesta_serializada.data
+    #     })
     
     def post(self, request: Request):
         print(request.data)
