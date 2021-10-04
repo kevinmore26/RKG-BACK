@@ -141,3 +141,10 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
+
+
+#Sirve para guardar los archivos que se suben al servidor
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# Sirve para indicar la ruta en la cual se ubica los archivos subidos al servidor
+MEDIA_URL = '/assets/'

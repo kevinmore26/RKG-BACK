@@ -4,7 +4,8 @@ from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .models import ProductoModel
-from .serializers import ProductoSerializer
+from rest_framework import status
+from .serializers import ProductoSerializer, ImagenSerializer
 from rest_framework import status
 from .utils import  PaginacionPersonalizada
  
@@ -123,3 +124,23 @@ class ProductoController(APIView):
             "message": "Producto eliminado exitosamente",
             "content": serializador.data
         })
+
+class SubirImagenController(CreateAPIView):
+    serializer_class= ImagenSerializer
+
+    def post(self, request:Request):
+        print(request.FILES)
+        data = self.serializer_class(data= request.FILES)
+
+        if data.is_valid():
+            archivo = data.save()
+            url = request.META.get('HTTP_HOST')
+            return Response(data={
+                'message': 'Archivo subido exitosamente',
+                'content': url + archivo
+            }, status=status.HTTP_201_CREATED)
+        else:
+            return Response(data={
+                'message': 'Error al crear el archivo',
+                'content': data.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
