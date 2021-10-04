@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-
+from datetime import timedelta
 from pathlib import Path
 from os import environ
 from dotenv import load_dotenv
@@ -140,3 +140,28 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
+
+AUTH_USER_MODEL = 'gestion.ClienteModel'
+
+#Configuración toda la configuración necesaria a mi libreria de DJANGO REST FRAMEWORK 
+#Indicar 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
+
+
+#Encargada de la configuracion demi libreria de DRF SIMPLE JWT
+SIMPLE_JWT = {
+    'USER_ID_FIELD': 'clienteId',
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1)
+}
+
+# sirve para indicar donde se almacenaran los archivos que se subiran alservidor
+MEDIA_ROOT = BASE_DIR / 'media'
+
+MEDIA_URL = '/assets/'
+
+
+
