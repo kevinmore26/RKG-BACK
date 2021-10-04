@@ -4,7 +4,13 @@ from .views import (
                     OperacionesController,
                     AdopcionesController,
                     AdopcionController,
-                    SubirImagenController)
+                    SubirImagenController,
+                    RegistroController,
+                    ProductosController,
+                    ProductoController)
+
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+                    
                     
 
 urlpatterns = [
@@ -14,6 +20,11 @@ urlpatterns = [
     path('adopciones/', AdopcionesController.as_view()),
     path('adopcion/<int:id>', AdopcionController.as_view()),
     path('subir-imagen', SubirImagenController.as_view()),
+    path('cliente',RegistroController.as_view()),
+    path('login', TokenObtainPairView.as_view()),
+    path('refresh-session',TokenRefreshView.as_view()),
+    path('productos/', ProductosController.as_view()),
+    path('producto/<int:id>', ProductoController.as_view())
    
 ]
 

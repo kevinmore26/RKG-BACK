@@ -21,15 +21,20 @@ class ClienteModel(models.Model):
     clienteDocumento = models.CharField(
          db_column='documento',max_length=8
     )
+    clienteCorreo = models.EmailField(
+        max_length=50, db_column='email', unique= True,null=False,default='rkg@mascotitas.com'
+    )
+    clientePassword = models.TextField(null=True)
     clienteCelular = models.IntegerField(
         null=True,unique=True,db_column='celular'
     )
+    
     perfilCliente = models.CharField(
          db_column='PerfilModel',max_length=19
     )
     perfiles = models.ForeignKey(to=PerfilModel, db_column='perfiles_id',
                                  null=False, related_name='perfilCliente0', on_delete=models.PROTECT)
-
+    USERNAME_FIELD = 'clienteCorreo'
     class Meta:
         db_table = 'clientes'
         verbose_name = 'cliente'
@@ -37,10 +42,8 @@ class ClienteModel(models.Model):
 class ProductoModel(models.Model):
 
     class OpcionesUM(models.TextChoices):
-        UNIDADES = 'UN', 'UNIDADES' 
-        DOCENA = 'DOC', 'DOCENA' 
-        CIENTO = 'CI', 'CIENTO' 
-        MILLAR = 'MI', 'MILLAR' 
+        UNIDAD = 'UN', 'UNIDAD' 
+        
 
 
     # Tipos de datos del ORM => https://docs.djangoproject.com/en/3.2/ref/models/fields/#field-types
@@ -49,12 +52,21 @@ class ProductoModel(models.Model):
         primary_key=True, null=False, unique=True, db_column='id')
 
     productoNombre = models.CharField(
-      db_column='nombre', null=False, max_length=14)
+      db_column='nombre', null=False, max_length=50, verbose_name='nombre')
 
-    productoPrecio = models.DecimalField(max_digits=5, decimal_places=2, db_column='precio')
+    productoPrecio = models.DecimalField(
+        max_digits=5, decimal_places=2, db_column='precio', verbose_name='precio')
 
     productoUnidadMedida = models.TextField(
-        choices=OpcionesUM.choices, default=OpcionesUM.UNIDADES, db_column='unidad_medida')
+        choices=OpcionesUM.choices, default=OpcionesUM.UNIDAD, db_column='unidad_medida', verbose_name='UnidadMedida')
+
+    productoDescripcion = models.CharField(
+        db_column='descripcion', null=False, max_length=100, verbose_name='descripcion',default='none' )
+    
+    productoEstado = models.BooleanField(db_column='estado', default=True, null=False)
+
+    def __str__(self):
+        return self.productoNombre
 
     class Meta:
         """Link de documentacion https://docs.djangoproject.com/en/3.2/ref/models/options/"""

@@ -2,6 +2,19 @@ from django.contrib import admin
 from .models import ClienteModel, ProductoModel,AdopcionModel
 
 class ProductoAdmin(admin.ModelAdmin):
+    list_display = ['productoId', 'productoNombre', 'productoPrecio', 'productoUnidadMedida', 'productoDescripcion']
+
+    search_fields = ['productoNombre', 'productoDescripcion']
+
+    # list_filter = [productoTipo]
+
+    readonly_fields = ['productoId']
+
+
+
+
+
+class ProductoAdmin(admin.ModelAdmin):
     
     list_display = ['productoId', 'productoNombre', 'productoPrecio']
     
