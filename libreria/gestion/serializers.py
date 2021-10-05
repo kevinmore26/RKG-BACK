@@ -6,6 +6,8 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.conf import settings
 
 class ProductoSerializer(serializers.ModelSerializer):
+    productoFoto = serializers.CharField(max_length=100)
+    
     class Meta:
         model = ProductoModel
 
