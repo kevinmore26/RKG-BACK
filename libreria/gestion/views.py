@@ -47,7 +47,7 @@ class ProductosController(ListCreateAPIView):
             }, status=status.HTTP_201_CREATED)
         else:
             return Response(data={
-                "message": "Error al guardar el producto",
+                "message": "Error al crear el producto",
                 "content": data.errors
             }, status=status.HTTP_400_BAD_REQUEST)
 

@@ -52,13 +52,24 @@ class ProductoModel(models.Model):
     productoPrecio = models.DecimalField(
         max_digits=5, decimal_places=2, db_column='precio', verbose_name='precio')
 
-    productoUnidadMedida = models.TextField(
-        choices=OpcionesUM.choices, default=OpcionesUM.UNIDAD, db_column='unidad_medida', verbose_name='UnidadMedida')
-
     productoDescripcion = models.CharField(
         db_column='descripcion', null=False, max_length=100, verbose_name='descripcion')
     
-    productoEstado = models.BooleanField(db_column='estado', default=True, null=False)
+    productoEstado = models.BooleanField(
+        db_column='estado', default=True, null=False)
+
+    productoFoto = models.ImageField(
+        upload_to='productos/', db_column='foto', null=True)
+
+    productoCantidad = models.IntegerField(
+        db_column='cantidad', null=False, default=0)
+
+    # se actualizara su valor cuando el registro sufra alguna modificacion
+    # auto_now => agarrara la fecha actual cuando parte del registro o en su totalidad sea modificada
+    updatedAt = models.DateTimeField(db_column='updated_at', auto_now=True)
+
+    # auto_now_add => cuando se cree un nuevo registro, agarrara la fecha actual y lo creara en esta columna
+    createdAt = models.DateTimeField(db_column='created_at', auto_now_add=True)
 
     def __str__(self):
         return self.productoNombre

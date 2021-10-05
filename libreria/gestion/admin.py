@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import ClienteModel, ProductoModel
 
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ['productoId', 'productoNombre', 'productoPrecio', 'productoUnidadMedida', 'productoDescripcion']
+    list_display = ['productoId', 'productoNombre', 'productoPrecio','productoDescripcion']
 
     search_fields = ['productoNombre', 'productoDescripcion']
 
