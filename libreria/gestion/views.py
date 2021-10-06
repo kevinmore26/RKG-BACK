@@ -74,14 +74,6 @@ class ProductoController(RetrieveUpdateDestroyAPIView):
     queryset = ProductoModel.objects.all()
 
 
-    # def patch(self, request, id):
-    #     # actualizacion parcial
-    #     pass
-
-    # def put(self, request, id):
-    #     # actualizacion total
-    #     pass
-
     def get(self, request, id):
         productoEncontrado = self.get_queryset().filter(productoId=id).first()
 
@@ -118,30 +110,6 @@ class ProductoController(RetrieveUpdateDestroyAPIView):
         return Response(data={
             'message': 'Producto eliminado exitosamente'
         })
-
-
-    # def get(self, request, id):
-    #     # SELECT * FROM productos WHERE id = id
-    #     productoEncontrado = ProductoModel.objects.filter(
-    #         productoId=id).first()
-    #     try:
-    #         productoEncontrado2 = ProductoModel.objects.get(productoId=id)
-    #         print(productoEncontrado2) 
-    #     except ProductoModel.DoesNotExist:
-    #         print('No se encontro')
-
-    #     #si el producto no existe retornar message='producto no existe' con un estado NOT_FOUND
-    #     if productoEncontrado is None:
-    #         return Response(data={
-    #             "message": "Producto no encontrado",
-    #             "content": None
-    #         }, status=status.HTTP_404_NOT_FOUND)
-
-    #     serializador = ProductoSerializer(instance=productoEncontrado)
-    #     return Response(data={
-    #         "message": None,
-    #         "content": serializador.data
-    #     })
 
     def put(self, request: Request, id):
         #1 busco si el producto existe
