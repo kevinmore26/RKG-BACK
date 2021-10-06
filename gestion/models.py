@@ -39,7 +39,8 @@ class ProductoModel(models.Model):
         db_column='descripcion', null=False, max_length=100, verbose_name='descripcion',default='none' )
     
     productoEstado = models.BooleanField(db_column='estado', default=True, null=False)
-
+    productoCantidad = models.IntegerField(
+        db_column='cantidad', null=False, default=0)
     updatedAt = models.DateTimeField(db_column='updated_at', auto_now=True)
 
     createdAt = models.DateTimeField(db_column='created_at', auto_now_add=True)
@@ -105,7 +106,7 @@ class PedidoModel(models.Model):
     pedidoTotal = models.DecimalField(
         max_digits=5, decimal_places=2, db_column='total')
 
-    clientes = models.ForeignKey(
+    cliente = models.ForeignKey(
         to=clienteModel, related_name='clientePedidos', db_column='cliente_id', on_delete=models.PROTECT)
 
     vendedor = models.ForeignKey(

@@ -283,18 +283,18 @@ class VentaController(CreateAPIView):
             try:
                 with transaction.atomic():
                     cliente = clienteModel.objects.filter(
-                        usuarioId=cliente_id).first()
+                        clienteId=cliente_id).first()
 
                     vendedor = clienteModel.objects.filter(
-                        usuarioId=vendedor_id).first()
+                        clienteId=vendedor_id).first()
 
                     if not cliente or not vendedor:
                         raise Exception('Usuarios incorrectos')
 
-                    if cliente.usuarioTipo != 3:
+                    if cliente.clienteTipo != 3:
                         raise Exception('Cliente no corresponde el tipo')
 
-                    if vendedor.usuarioTipo == 3:
+                    if vendedor.clienteTipo == 3:
                         raise Exception('Vendedor no corresponde el tipo')
 
                     pedido = PedidoModel(

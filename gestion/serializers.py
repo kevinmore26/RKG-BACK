@@ -71,5 +71,5 @@ class ProductoSerializer(serializers.ModelSerializer):
     productoFoto=serializers.CharField(max_length=100)
     class Meta:
         model = ProductoModel
-
+        
         fields='__all__'

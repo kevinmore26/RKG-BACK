@@ -20,7 +20,7 @@ class ComprobanteModel(models.Model):
 
     comprobanteXML = models.URLField(db_column='xml', null=False)
 
-    comprobanteCDR = models.URLField(db_column='cdr', null=False)
+    comprobanteCDR = models.URLField(db_column='cdr', null=True)
 
     pedido = models.OneToOneField(to=PedidoModel, on_delete=models.CASCADE,
                                   db_column='pedido_id', related_name='pedidoComprobante')
