@@ -8,6 +8,8 @@ from rest_framework import status
 from .serializers import ProductoSerializer, ImagenSerializer
 from rest_framework import status
 from .utils import  PaginacionPersonalizada
+from os import remove
+from django.conf import settings
  
 
 class PruebaController(APIView):
@@ -72,8 +74,13 @@ class ProductoController(RetrieveUpdateDestroyAPIView):
     queryset = ProductoModel.objects.all()
 
 
-    def put(self, request, id):
-        pass
+    # def patch(self, request, id):
+    #     # actualizacion parcial
+    #     pass
+
+    # def put(self, request, id):
+    #     # actualizacion total
+    #     pass
 
     def get(self, request, id):
         productoEncontrado = self.get_queryset().filter(productoId=id).first()
@@ -88,6 +95,30 @@ class ProductoController(RetrieveUpdateDestroyAPIView):
         return Response(data={
             'content': data.data
         })
+
+
+    def delete(self, request, id):
+
+        productoEncontrado = self.get_queryset().filter(productoId=id).first()
+        if not productoEncontrado:
+            return Response(data={
+                'message': 'Producto no encontrado'
+            }, status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            data = productoEncontrado.delete()
+            # print(str(productoEncontrado.productoFoto))
+            remove(settings.MEDIA_ROOT / str(productoEncontrado.productoFoto))
+        except Exception as e:
+            print(e)
+        
+             
+        # data = ProductoModel.objects.filter(productoId=id).delete()
+        print(data)
+        return Response(data={
+            'message': 'Producto eliminado exitosamente'
+        })
+
 
     # def get(self, request, id):
     #     # SELECT * FROM productos WHERE id = id
@@ -112,54 +143,33 @@ class ProductoController(RetrieveUpdateDestroyAPIView):
     #         "content": serializador.data
     #     })
 
-    # def put(self, request: Request, id):
-    #     #1 busco si el producto existe
-    #     productoEncontrado = ProductoModel.objects.filter(
-    #         productoId=id).first()
+    def put(self, request: Request, id):
+        #1 busco si el producto existe
+        productoEncontrado = ProductoModel.objects.filter(
+            productoId=id).first()
 
-    #     if productoEncontrado is None:
-    #         return Response(data={
-    #             "message": "Producto no existe",
-    #             "content": None
-    #         }, status=status.HTTP_404_NOT_FOUND)
+        if productoEncontrado is None:
+            return Response(data={
+                "message": "Producto no existe",
+                "content": None
+            }, status=status.HTTP_404_NOT_FOUND)
 
-    #     #2 modifica los valores proveidos
-    #     serializador = ProductoSerializer(data=request.data)
-    #     if serializador.is_valid():
-    #         serializador.update(instance=productoEncontrado, 
-    #                             validated_data=serializador.validated_data)
+        #2 modifica los valores proveidos
+        serializador = ProductoSerializer(data=request.data)
+        if serializador.is_valid():
+            serializador.update(instance=productoEncontrado, 
+                                validated_data=serializador.validated_data)
 
-    #         #3 guarda y devuelve el producto actualizado
-    #         return Response(data={
-    #             "message": "Producto actualizado exitosamente",
-    #             "content": serializador.data
-    #         })
-    #     else:
-    #         return Response(data={
-    #             "message": "Error al actualizar el producto",
-    #             "content": serializador.errors
-    #         }, status=status.HTTP_400_BAD_REQUEST)
-
-    # def delete(self, request, id):
-
-    #     productoEncontrado: ProductoModel = ProductoModel.objects.filter(
-    #         productoId=id).first()
-
-    #     if productoEncontrado is None:
-    #         return Response(data={
-    #             "message": "Producto no encontrado",
-    #             "content": None
-    #         }, status=status.HTTP_404_NOT_FOUND)
-
-    #     productoEncontrado.productoEstado = False
-    #     productoEncontrado.save()
-
-    #     serializador = ProductoSerializer(instance=productoEncontrado)
-
-    #     return Response(data={
-    #         "message": "Producto eliminado exitosamente",
-    #         "content": serializador.data
-    #     })
+            #3 guarda y devuelve el producto actualizado
+            return Response(data={
+                "message": "Producto actualizado exitosamente",
+                "content": serializador.data
+            })
+        else:
+            return Response(data={
+                "message": "Error al actualizar el producto",
+                "content": serializador.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
 
 class SubirImagenController(CreateAPIView):
     serializer_class= ImagenSerializer
