@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ClienteModel, ProductoModel,AdopcionModel
+from .models import clienteModel, ProductoModel,AdopcionModel
 
 class ProductoAdmin(admin.ModelAdmin):
     list_display = ['productoId', 'productoNombre', 'productoPrecio', 'productoUnidadMedida', 'productoDescripcion']
@@ -32,7 +32,7 @@ class AdopcionesAdmin(admin.ModelAdmin):
     readonly_fields = ['productoId']
 
 
-admin.site.register(ClienteModel)
+admin.site.register(clienteModel)
 admin.site.register(ProductoModel, ProductoAdmin)
 admin.site.register(AdopcionModel)
 

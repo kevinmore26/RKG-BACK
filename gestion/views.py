@@ -6,15 +6,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
-from .models import CabeceraModel, DetalleModel, ProductoModel, ClienteModel,AdopcionModel
+from .models import  ProductoModel, clienteModel,AdopcionModel,clienteModel,DetallePedidoModel,PedidoModel
 from .serializers import (
-                          OperacionSerializer,
-                          OperacionModelSerializer,
+                          VentaSerializer,
                           AdopcionSerializer,
                           ImagenSerializer,
                           RegistroSerializer,ProductoSerializer)
-                        #   ProductoSerializer,
-                        #   ClienteSerializer,
+                        
 from rest_framework import status
 
 from .utils import  PaginacionPersonalizada
@@ -146,74 +144,6 @@ class ProductoController(APIView):
             "message": "Producto eliminado exitosamente",
             "content": serializador.data
         })
-
-class OperacionController(CreateAPIView):
-    serializer_class = OperacionSerializer
-
-    def post(self, request: Request):
-        data = self.serializer_class(data=request.data)
-        if data.is_valid():
-            # si el cliente existe o no existe por su DOCUMENTO
-            documento = data.validated_data.get('cliente')
-            clienteEncontrado: ClienteModel = ClienteModel.objects.filter(
-                clienteDocumento=documento).first()
-
-            detalles = data.validated_data.get('detalle')
-            tipo = data.validated_data.get('tipo')
-
-            try:
-                with transaction.atomic():
-                    if clienteEncontrado is None:
-                        raise Exception('Usuario no existe')
-
-                    nuevaCabecera = CabeceraModel(
-                        cabeceraTipo=tipo, clientes=clienteEncontrado)
-
-                    nuevaCabecera.save()
-                    for detalle in detalles:
-                        producto = AdopcionModel.objects.get(
-                            productoId=detalle.get('producto'))
-
-                        DetalleModel(
-                            detalleCantidad=detalle.get('cantidad'), detalleImporte=producto.productoPrecio *
-                            detalle.get('cantidad'),
-                            productos=producto,
-                            cabeceras=nuevaCabecera).save()
-
-            except Error as e:
-                print(e)
-                return Response(data={
-                    'message': 'Error al crear la operacion',
-                    'content': e.args
-                })
-            except Exception as exc:
-                return Response(data={
-                    'message': 'Error al crear la operacion',
-                    'content': exc.args
-                })
-
-            return Response(data={
-                'message': 'Operacion registrada exitosamente'
-            })
-        else:
-            return Response(data={
-                'message': 'Error al crear la operacion',
-                'content': data.errors
-            }, status=status.HTTP_400_BAD_REQUEST)
-
-
-class OperacionesController(RetrieveAPIView):
-    serializer_class = OperacionModelSerializer
-
-    def get(self, request: Request, id):
-        cabecera = get_object_or_404(CabeceraModel, pk=id)
-        # cabecera = CabeceraModel.objects.get(cabeceraId=id)
-        print(cabecera)
-        cabecera_serializada = self.serializer_class(instance=cabecera)
-        return Response(data={
-            'message': 'La operacion es:',
-            'content': cabecera_serializada.data
-        })
 class RegistroController (CreateAPIView):
     serializer_class = RegistroSerializer
     def post(self, request: Request):
@@ -341,4 +271,68 @@ class SubirImagenController(CreateAPIView):
                 'content': data.errors
             }, status=status.HTTP_400_BAD_REQUEST)    
     
+class VentaController(CreateAPIView):
+    serializer_class = VentaSerializer
+
+    def post(self, request):
+        data = self.serializer_class(data=request.data)
+        if data.is_valid():
+            cliente_id = data.validated_data.get('cliente_id')
+            vendedor_id = data.validated_data.get('vendedor_id')
+            detalles = data.validated_data.get('detalle')
+            try:
+                with transaction.atomic():
+                    cliente = clienteModel.objects.filter(
+                        usuarioId=cliente_id).first()
+
+                    vendedor = clienteModel.objects.filter(
+                        usuarioId=vendedor_id).first()
+
+                    if not cliente or not vendedor:
+                        raise Exception('Usuarios incorrectos')
+
+                    if cliente.usuarioTipo != 3:
+                        raise Exception('Cliente no corresponde el tipo')
+
+                    if vendedor.usuarioTipo == 3:
+                        raise Exception('Vendedor no corresponde el tipo')
+
+                    pedido = PedidoModel(
+                        pedidoTotal=0, cliente=cliente, vendedor=vendedor)
+
+                    pedido.save()
+                    for detalle in detalles:
+                        producto_id = detalle.get('producto_id')
+                        cantidad = detalle.get('cantidad')
+                        producto = ProductoModel.objects.filter(
+                            productoId=producto_id).first()
+                        if not producto:
+                            raise Exception('Producto {} no existe'.format(
+                                producto_id))
+                        if cantidad > producto.productoCantidad:
+                            raise Exception(
+                                'No hay suficiente cantidad para el producto {}'.format(producto.productoNombre))
+                        producto.productoCantidad = producto.productoCantidad - cantidad
+                        producto.save()
+                        detallePedido = DetallePedidoModel(detalleCantidad=cantidad,
+                                                           detalleSubTotal=producto.productoPrecio * cantidad,
+                                                           producto=producto,
+                                                           pedido=pedido)
+                        detallePedido.save()
+                        pedido.pedidoTotal += detallePedido.detalleSubTotal
+                        pedido.save()
+                return Response(data={
+                    'message': 'Venta agregada exitosamente'
+                })
+
+            except Exception as e:
+                return Response(data={
+                    'message': e.args
+                }, status=400)
+
+        else:
+            return Response(data={
+                'message': 'Error al agregar la venta',
+                'content': data.errors
+            })
 

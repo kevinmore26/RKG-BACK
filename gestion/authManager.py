@@ -23,3 +23,5 @@ class ManejoCliente(BaseUserManager):
         nuevoUsuario.is_superuser = True
         # nuevoUsuario.is_staff = True
         nuevoUsuario.save(using=self._db)
+    
+    

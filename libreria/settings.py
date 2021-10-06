@@ -135,11 +135,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+AUTH_USER_MODEL = 'gestion.ClienteModel'
 
 STATIC_URL = '/static/'
 SIMPLE_JWT = {
-    'USER_ID_FIELD': 'clienteId',
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1)
+    'USER_ID_FIELD': 'usuarioId',
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
 }
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
