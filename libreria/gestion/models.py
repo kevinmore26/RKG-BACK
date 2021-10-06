@@ -36,10 +36,7 @@ class ClienteModel(models.Model):
         verbose_name_plural = 'clientes'
 class ProductoModel(models.Model):
 
-    class OpcionesUM(models.TextChoices):
-        UNIDAD = 'UN', 'UNIDAD' 
         
-
 
     # Tipos de datos del ORM => https://docs.djangoproject.com/en/3.2/ref/models/fields/#field-types
     # Parametros genericos de lo tipos de datos => https://docs.djangoproject.com/en/3.2/ref/models/fields/#field-options
@@ -55,9 +52,6 @@ class ProductoModel(models.Model):
     productoDescripcion = models.CharField(
         db_column='descripcion', null=False, max_length=100, verbose_name='descripcion')
     
-    productoEstado = models.BooleanField(
-        db_column='estado', default=True, null=False)
-
     productoFoto = models.ImageField(
         upload_to='productos/', db_column='foto', null=True)
 
