@@ -36,7 +36,7 @@ class ProductosController(ListCreateAPIView):
         })
 
     def post(self, request: Request):
-        print(request.data)
+        # print(request.data)
         data = self.serializer_class(data=request.data)
         if data.is_valid():
             data.save()
