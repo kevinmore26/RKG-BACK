@@ -1,4 +1,10 @@
-# RKG-BACK
-Proyecto sobre la parte backend de un e-commerce de mascotas
-<div style={font-size:"140px"}>hola</div>
-                                                     asdasdsad
+   # PROYECTO BACKEND RKG
+## E-commerce de mascotas - Tienda de mascotas y apartado de adopciones
+AUTORES 💻 :
+
+>  _Kevin More_ 😎
+
+>  _Renzo Estrada_ 😎
+ 
+>  _Guillermo Mujica_ 😎
+- hola
