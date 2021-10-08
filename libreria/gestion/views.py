@@ -158,3 +158,6 @@ class SubirImagenController(CreateAPIView):
                 'message': 'Error al crear el archivo',
                 'content': data.errors
             }, status=status.HTTP_400_BAD_REQUEST)
+
+
+
