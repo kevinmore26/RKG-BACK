@@ -9,13 +9,23 @@ from django.conf import settings
 class RegistroSerializer( serializers.ModelSerializer):
     def save(self):
         clienteNombre =self.validated_data.get('clienteNombre')
+        clienteApellido = self.validated_data.get('clienteApellido')
         clienteDocumento = self.validated_data.get('clienteDocumento')
         clienteCelular = self.validated_data.get('clienteCelular')
         clienteCorreo = self.validated_data.get('clienteCorreo')
-        clientePassword = self.validated_data.get('clientePassword')
-        perfilCliente =self.validated_data.get('perfilCliente')
-        nuevoCliente = ClienteModel(clienteNombre=clienteNombre,clienteDocumento= clienteDocumento,clienteCelular=clienteCelular, clienteCorreo= clienteCorreo,clientePassword=clientePassword,perfilCliente=perfilCliente)
-        nuevoCliente.set_password(clientePassword)
+        password = self.validated_data.get('password')
+        clienteTipo = self.validated_data.get('clienteTipo')
+        nuevoCliente = ClienteModel(
+            clienteNombre = clienteNombre,
+            clienteApellido = clienteApellido,
+            clienteDocumento = clienteDocumento,
+            clienteCelular = clienteCelular,
+            clienteCorreo = clienteCorreo,
+            clienteTipo = clienteTipo
+        )
+        
+        nuevoCliente. make_password(password)
+        nuevoCliente.set_password(password)
         nuevoCliente.save()
         return nuevoCliente
     

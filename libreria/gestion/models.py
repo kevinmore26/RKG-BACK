@@ -1,26 +1,26 @@
 from django.db.models.deletion import CASCADE
 from django.db import models
 
-# from .authManager import ManejoUsuarios
+from .authManager import ManejoCliente
 from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser
 from django.core.validators import MinValueValidator
 
-#Se va Perfil model
-class PerfilModel(models.Model):
-    perfilId = models.AutoField(
-        primary_key=True,null=False,unique=True,db_column='id'
-    )
-    perfilNick = models.CharField(
-        db_column='nick',max_length=19
-    )
+from .authManager import ManejoCliente
 
+#Se va Perfil model
 #Modificar para que se acemeje a la clase 
 class ClienteModel(AbstractBaseUser, PermissionsMixin):
+   
+    TIPO_CLIENTE = [(1,'ADMINISTRADOR'),(2,'COLABORADOR'),(3,'CLIENTE')]
+   
     clienteId = models.AutoField(
         primary_key=True, null= False, unique= True, db_column='id'
     )
     clienteNombre = models.CharField(
-         db_column='nombre',max_length=19
+         db_column='nombre',max_length=50, null=True
+    )
+    clienteApellido = models.CharField(
+        db_column='apellido',max_length=50, null= True
     )
     clienteDocumento = models.CharField(
          db_column='documento',max_length=8
@@ -29,21 +29,19 @@ class ClienteModel(AbstractBaseUser, PermissionsMixin):
         null=True,unique=True,db_column='celular'
     )
     clienteCorreo = models.EmailField(
-        max_length=50, db_column='email', unique= True
+        max_length=50, db_column='email', unique= True,null=False,default=''
     )
-    clientePassword = models.TextField(null=True)
-
-    perfilCliente = models.CharField(
-         db_column='PerfilModel',max_length=19
-    )
-    perfiles = models.ForeignKey(to=PerfilModel, db_column='perfiles_id',
-                                 null=False, related_name='perfilCliente0', on_delete=models.PROTECT)
-    
+    password = models.TextField()
+    clienteTipo = models.IntegerField(choices=TIPO_CLIENTE,db_column = 'tipo',default=3 )
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    object = ManejoCliente()
     # definimos la columna que sera la encargada de validar que el usuario sea unico e irrepetible
     USERNAME_FIELD = 'clienteCorreo'
-
+ 
+    
     # es lo que pedira la consola cuando se llame al createsuperuser
-    # REQUIRED_FIELDS = ['clienteNombre', ' clienteCelular', 'clienteCorreo','']
+    REQUIRED_FIELDS = ['clienteNombre','clienteApellido','clienteDocumento','clienteCelular','clienteTipo']
 
     class Meta:
         db_table = 'clientes'

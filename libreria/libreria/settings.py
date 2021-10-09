@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gestion',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -139,16 +140,16 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
+# TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
 
 AUTH_USER_MODEL = 'gestion.ClienteModel'
 
 #Configuración toda la configuración necesaria a mi libreria de DJANGO REST FRAMEWORK 
 #Indicar 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
+    )
 }
 
 
@@ -162,6 +163,4 @@ SIMPLE_JWT = {
 MEDIA_ROOT = BASE_DIR / 'media'
 
 MEDIA_URL = '/assets/'
-
-
 
