@@ -1,3 +1,4 @@
+from rest_framework import request
 from rest_framework.test import APITestCase
 from .models import ProductoModel
 
@@ -72,5 +73,40 @@ class ProductosTestCase(APITestCase):
 
         print(request.data)     
         self.assertEqual(1, 1)
+
+    
+    def test_get_id_fail(self):
+        '''Deberia fallar el test al solicitar un id que no existe'''
+
+        productoEncontrado = ProductoModel.objects.all()
+        request = self.client.get('/gestion/producto/100')
+        message = request.data.get('message')
+
+        print(request.data) 
+
+        self.assertEqual(request.status_code, 404)
+        self.assertEqual(message, 'Producto no encontrado')
           
 
+    def test_delete_id_fail(self):
+        '''Deberia fallar el test delete al solicitar un id que no existe'''
+
+        productoEncontrado = ProductoModel.objects.all()
+        request = self.client.delete('/gestion/producto/75')
+        message = request.data.get('message')
+
+        print(request.data) 
+
+        self.assertEqual(request.status_code, 404)
+        self.assertEqual(message, 'Producto no encontrado')
+
+    def test_delete_id_success(self):
+        '''Deberia borrar el producto solicitado'''
+
+        productoEncontrado = ProductoModel.objects.all()
+        request = self.client.delete('/gestion/producto/4')
+        message = request.data.get('message')
+
+        print(request.data) 
+        self.assertEqual(request.status_code, 200)
+        self.assertEqual(message, 'Producto eliminado exitosamente')
