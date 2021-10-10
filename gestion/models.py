@@ -115,6 +115,21 @@ class PedidoModel(models.Model):
     class Meta:
         db_table = 'pedidos'
 
+class MetodoPagoModel(models.Model):
+
+    class OpcionesPago(models.TextChoices):
+        TARJETA='T','TARJETA'
+        CONTRAENTREGA='CE','CONTRAENTREGA'
+
+    metodoPagoId = models.AutoField(db_column='id', primary_key=True, null=False, unique=True)
+
+    metodoTipo = models.TextField(db_column='metodo', choices=OpcionesPago.choices,default=OpcionesPago.TARJETA)
+    metodoNro = models.IntegerField(db_column='nro')
+
+    class Meta: 
+        db_table = 'metodo_pago'
+
+        #default=OpcionesUM.UNIDAD
 
 class DetallePedidoModel(models.Model):
     detalleId = models.AutoField(primary_key=True, db_column='id', unique=True)
@@ -131,8 +146,13 @@ class DetallePedidoModel(models.Model):
     pedido = models.ForeignKey(
         to=PedidoModel, related_name='pedidoDetalles', db_column='pedido_id', on_delete=models.PROTECT)
 
+    metodoPago = models.ForeignKey(to=MetodoPagoModel, db_column='metodo_id', null=False, related_name='ordenMetodo', on_delete=models.PROTECT)
+
+
     class Meta:
         db_table = 'detalles'
+
+
 
 class AdopcionModel(models.Model):
 
@@ -148,7 +168,7 @@ class AdopcionModel(models.Model):
     
     adopcionEdad = models.IntegerField(null=True,db_column='edad')
 
-    adopcionTamaño = models.TextField(
+    adopcionTamanio = models.TextField(
         choices=OpcionesUM.choices, default=OpcionesUM.MEDIANO, db_column='tamanio')
     
     adopcionCaracteristicas = models.CharField(
@@ -165,10 +185,11 @@ class AdopcionModel(models.Model):
     # )
     cliente = models.ForeignKey(to=clienteModel,db_column='cliente_id',
                                   on_delete=models.PROTECT,related_name='clienteAdopcion',null=True, blank=True)
+    
 
     class Meta:
         
         db_table='adopciones'
-        ordering = ['-adopcionTamaño']
+        ordering = ['-adopcionTamanio']
         verbose_name = 'adopcion'
         verbose_name_plural = 'adopciones'

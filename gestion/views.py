@@ -38,6 +38,8 @@ class PruebaController(APIView):
     def post(self, request: Request, format=None):
         print(request.data)
         return Response(data={'message': 'Hiciste post'})
+        # -----------------------------------------------------------------------------------
+
 class ProductosController(ListCreateAPIView):
     # pondremos la consulta de ese modelo en la bd
     queryset = ProductoModel.objects.all() #SELECT * FROM productos;
@@ -153,7 +155,7 @@ class RegistroController (CreateAPIView):
             return Response(data={
                 "message": "Usuario creado exitosamente",
                 "content": data.data
-            })
+            },)
         else:
             return Response(data={
                 "message": "Error al crear el usuario",
@@ -178,13 +180,14 @@ class AdopcionesController(ListCreateAPIView):
             }, status=status.HTTP_400_BAD_REQUEST) 
 
 class AdopcionController(RetrieveUpdateDestroyAPIView):
+    serializer_class = AdopcionSerializer
     def get(self, request, id):
         
         adopcionEncontrada = AdopcionModel.objects.filter(
             adopcionId=id).first()
         try:
-            adopcionEncontrada2 = AdopcionModel.objects.get(adopcionId=id)
-            print(adopcionEncontrada2)
+            adopcionEncontrada = AdopcionModel.objects.get(adopcionId=id)
+            print(adopcionEncontrada)
         except AdopcionModel.DoesNotExist:
             print('No se encontro')
 
@@ -196,9 +199,9 @@ class AdopcionController(RetrieveUpdateDestroyAPIView):
 
         serializador = AdopcionSerializer(instance=adopcionEncontrada)
         return Response(data={
-            "message": None,
+            "message": "Adopcion encontrada",
             "content": serializador.data
-        })
+        },status=status.HTTP_200_OK)
 
     def put(self, request: Request, id):
         # 1. busco si el producto existe

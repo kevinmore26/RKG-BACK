@@ -27,8 +27,8 @@ class ProductoAdmin(admin.ModelAdmin):
 
 class AdopcionesAdmin(admin.ModelAdmin):
     list_display = ['adopcionId', 'adopcionNombre', 'adopcionEdad',]
-    search_fields = ['adopcionNombre', 'adopcionTamaño']
-    list_filter = ['adopcionTamaño']
+    search_fields = ['adopcionNombre', 'adopcionTamanio']
+    list_filter = ['adopcionTamanio']
     readonly_fields = ['productoId']
 
 

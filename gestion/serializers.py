@@ -38,7 +38,7 @@ class AdopcionSerializer(serializers.ModelSerializer):
     adopcionFoto=serializers.CharField(max_length=100)
     class Meta:
         model=AdopcionModel
-
+        
         fields='__all__'
 
 
