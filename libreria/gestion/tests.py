@@ -6,11 +6,11 @@ class ProductosTestCase(APITestCase):
 
     def setUp(self):
         ProductoModel(  
-                        productoNombre= 'Casa de perro1',
+                        productoNombre= 'Casa de perro4',
                         productoId=4,
                         productoPrecio= 120.90,
-                        productoFoto= 'casaperro1.jpg',
-                        productoDescripcion= 'Casa para perro1').save()
+                        productoFoto= 'casaperro4.jpg',
+                        productoDescripcion= 'Casa para perro4').save()
         ProductoModel(  
                         productoNombre= 'Casa de perro2',
                         productoId=2,
@@ -23,6 +23,12 @@ class ProductosTestCase(APITestCase):
                         productoPrecio= 120.90,
                         productoFoto= 'casaperro3.jpg',
                         productoDescripcion= 'Casa para perro3').save()
+        ProductoModel(  
+                        productoNombre= 'Casa de perro5',
+                        productoId=5,
+                        productoPrecio= 120.90,
+                        productoFoto= 'casaperro5.jpg',
+                        productoDescripcion= 'Casa para perro5').save()
 
     def test_post_fail(self):
         '''Deberia fallar el test cuando no le pasamos la informacion'''
@@ -110,3 +116,52 @@ class ProductosTestCase(APITestCase):
         print(request.data) 
         self.assertEqual(request.status_code, 200)
         self.assertEqual(message, 'Producto eliminado exitosamente')
+
+    def test_put_fail_1(self):
+        '''Deberia fallar el put al no completar los campos requeridos'''
+
+        productoEncontrado = ProductoModel.objects.all()
+        request = self.client.put('/gestion/producto/5')
+        message = request.data.get('message')
+
+        print(request.data) 
+
+        self.assertEqual(request.status_code, 400)
+        self.assertEqual(message, 'Error al actualizar el producto')
+    
+    def test_put_fail_2(self):
+        '''Deberia fallar el put al no existir el producto solicitado'''
+
+        productoEncontrado = ProductoModel.objects.all()
+        request = self.client.put('/gestion/producto/666')
+        message = request.data.get('message')
+
+        print(request.data) 
+
+        self.assertEqual(request.status_code, 404)
+        self.assertEqual(message, 'Producto no existe')
+
+    def test_put_success(self):
+        '''Deberia el test actualizar el producti solicitado'''
+
+        productoEncontrado = ProductoModel.objects.all()
+        request = self.client.put('/gestion/producto/3', data={
+            "productoNombre": "Casa de perro3",
+            "productoId": 3,
+            "productoPrecio": 580.90,
+            "productoFoto": "casaperro3.jpg",
+            "productoDescripcion": "Casa para perro3"
+        }, format='json')
+        message = request.data.get('message')
+
+        print(request.data) 
+
+        self.assertEqual(request.status_code, 200)
+        self.assertEqual(message, 'Producto actualizado exitosamente')
+
+
+
+
+
+
+
