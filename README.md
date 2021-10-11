@@ -38,7 +38,7 @@ mascotas, respecto a las ideas secundarias estarían enfocadas a un apartado de 
 >
 # Instrucciones
 
-1. Para navegar entre ellas simplemente debes descargarte el repositorio mediante el siguiente comando:
+1. Para navegar en el proyecto descargarte el repositorio mediante el siguiente comando:
 
 ```
 git clone https://github.com/kevinmore26/RKG-BACK
