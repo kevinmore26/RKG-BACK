@@ -1,4 +1,5 @@
-# PROYECTO BACKEND RKG  ![logo](https://user-images.githubusercontent.com/84250823/136850833-c994078c-cea3-40b7-b725-9f794ea3e130.jpg)
+ ![logo](https://user-images.githubusercontent.com/84250823/136850833-c994078c-cea3-40b7-b725-9f794ea3e130.jpg)
+ # PROYECTO BACKEND RKG 
 ## E-commerce de mascotas - Tienda de mascotas y apartado de adopciones
 AUTORES 💻 :
 
