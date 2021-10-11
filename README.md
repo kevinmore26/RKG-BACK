@@ -7,7 +7,6 @@ AUTORES 💻 :
 >  _Renzo Estrada_ 😎
  
 >  _Guillermo Mujica_ 😎
-- hola
 
 ### Idea del proyecto 😼:
 La idea principal es tener un ecommerce enfocado a las
@@ -52,7 +51,7 @@ pip install -r requirements.txt
 
 4. Procede con el siguiente comando para crear las migraciones
 ```
-python manage.py gestion --name <nombre_tabla>
+python manage.py makemigrations gestion --name <nombre_migracion>
 ```
 
 >  No es necesario entrar a una carpeta para encontrar el manage.py ya que se encuentra afuera para una mejor organización por tema de tener varias apps (facturacion,gestion...)
