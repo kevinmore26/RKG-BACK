@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import AdopcionModel, ProductoModel,DetalleModel,CabeceraModel,ClienteModel
+from .models import AdopcionModel, ProductoModel, clienteModel,clienteModel
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.conf import settings
 from django.core.files.storage import default_storage
@@ -16,15 +16,18 @@ class RegistroSerializer( serializers.ModelSerializer):
         clienteCelular = self.validated_data.get('clienteCelular')
         clienteCorreo = self.validated_data.get('clienteCorreo')
         clientePassword = self.validated_data.get('clientePassword')
+        clienteTipo = self.validated_data.get('clienteTipo')
+
         perfilCliente =self.validated_data.get('perfilCliente')
-        nuevoCliente = ClienteModel(clienteNombre=clienteNombre,clienteDocumento= clienteDocumento,clienteCelular=clienteCelular, clienteCorreo= clienteCorreo,clientePassword=clientePassword,perfilCliente=perfilCliente)
+        nuevoCliente = clienteModel(clienteTipo=clienteTipo,clienteNombre=clienteNombre,clienteDocumento= clienteDocumento,clienteCelular=clienteCelular, clienteCorreo= clienteCorreo)
         nuevoCliente.set_password(clientePassword)
         nuevoCliente.save()
         return nuevoCliente
     
     class Meta:
-        model = ClienteModel
-        exclude = ['groups','user_permissions','is_superuser','last_login']
+        model = clienteModel
+        exclude = [ 'groups','user_permissions', 'is_superuser',
+                   'last_login', 'is_active', 'is_staff']
         extra_kwargs= {
             'password':{
                 'write_only': True,    
@@ -35,44 +38,19 @@ class AdopcionSerializer(serializers.ModelSerializer):
     adopcionFoto=serializers.CharField(max_length=100)
     class Meta:
         model=AdopcionModel
-
+        
         fields='__all__'
 
-        
-class DetalleOperacionSerializer(serializers.Serializer):
-    cantidad = serializers.IntegerField(required=True, min_value=1)
 
-    importe = serializers.DecimalField(
-        max_digits=5, decimal_places=2, min_value=0.01, required=True)
-
-    producto = serializers.IntegerField(required=True, min_value=1)
+class DetalleVentaSerializer(serializers.Serializer):
+    cantidad = serializers.IntegerField(required=True)
+    producto_id = serializers.IntegerField(required=True)
 
 
-class OperacionSerializer(serializers.Serializer):
-    tipo = serializers.ChoiceField(
-        choices=[('V', 'VENTA'), ('C', 'COMPRA')], required=True)
-
-    cliente = serializers.CharField(required=True, min_length=8, max_length=11)
-
-    detalle = DetalleOperacionSerializer(many=True)
-
-
-
-class DetalleOperacionModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DetalleModel
-        exclude = ['cabeceras']
-        depth = 1
-
-
-class OperacionModelSerializer(serializers.ModelSerializer):
-    cabeceraDetalles = DetalleOperacionModelSerializer(
-        many=True)
-
-    class Meta:
-        model = CabeceraModel
-        fields = '__all__'
-        depth = 1
+class VentaSerializer(serializers.Serializer):
+    cliente_id = serializers.IntegerField(min_value=0, required=True)
+    vendedor_id = serializers.IntegerField(min_value=0, required=True)
+    detalle = DetalleVentaSerializer(many=True, required=True)
 
 
 class ImagenSerializer(serializers.Serializer):
@@ -90,7 +68,8 @@ class ImagenSerializer(serializers.Serializer):
         return settings.MEDIA_URL + ruta
 
 class ProductoSerializer(serializers.ModelSerializer):
+    productoFoto=serializers.CharField(max_length=100)
     class Meta:
         model = ProductoModel
-
+        
         fields='__all__'

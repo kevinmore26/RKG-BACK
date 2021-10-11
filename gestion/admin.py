@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ClienteModel, ProductoModel,AdopcionModel
+from .models import clienteModel, ProductoModel,AdopcionModel
 
 class ProductoAdmin(admin.ModelAdmin):
     list_display = ['productoId', 'productoNombre', 'productoPrecio', 'productoUnidadMedida', 'productoDescripcion']
@@ -18,21 +18,21 @@ class ProductoAdmin(admin.ModelAdmin):
     
     list_display = ['productoId', 'productoNombre', 'productoPrecio']
     
-    search_fields = ['productoNombre', 'productoUnidadMedida']
+    search_fields = ['productoNombre']
     
-    list_filter = ['productoUnidadMedida']
+  
     
     readonly_fields = ['productoId']
 
 
 class AdopcionesAdmin(admin.ModelAdmin):
     list_display = ['adopcionId', 'adopcionNombre', 'adopcionEdad',]
-    search_fields = ['adopcionNombre', 'adopcionTamaño']
-    list_filter = ['adopcionTamaño']
+    search_fields = ['adopcionNombre', 'adopcionTamanio']
+    list_filter = ['adopcionTamanio']
     readonly_fields = ['productoId']
 
 
-admin.site.register(ClienteModel)
+admin.site.register(clienteModel)
 admin.site.register(ProductoModel, ProductoAdmin)
 admin.site.register(AdopcionModel)
 

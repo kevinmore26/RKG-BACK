@@ -47,10 +47,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gestion',
     'rest_framework',
-    'facturacion'    
+    'facturacion',
+    'corsheaders',    
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -135,11 +137,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+AUTH_USER_MODEL = 'gestion.ClienteModel'
 
 STATIC_URL = '/static/'
 SIMPLE_JWT = {
     'USER_ID_FIELD': 'clienteId',
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1)
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
 }
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -155,3 +158,9 @@ TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
 
 MEDIA_URL = '/assets/'
 MEDIA_ROOT = BASE_DIR / 'media'
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_METHODS = ['GET', 'POST']
+CORS_ALLOW_HEADERS = ['Content-Type', 'origin', 'Authorization', "accept", ]
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
