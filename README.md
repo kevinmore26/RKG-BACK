@@ -36,4 +36,28 @@ mascotas, respecto a las ideas secundarias estarían enfocadas a un apartado de 
 >
 >Canal de comunicación: Discord, Whatsapp, llamadas telefónicas
 >
+# Instrucciones
+
+1. Para navegar entre ellas simplemente debes descargarte el repositorio mediante el siguiente comando:
+
+```
+git clone https://github.com/kevinmore26/RKG-BACK
+```
+
+2. Una vez que haya descargado, ahora, tendrás que ingresar a la carpeta `RKG-BACK\` y  entrar a la rama `main`
+
+3. Luego tendrás que ingresar a la carpeta de la aplicacion llamada libreria
+```
+cd libreria
+```
+4.  Procede con el siguiente comando para crear las migraciones
+```
+python manage.py gestion --name <nombre_tabla>
+```
+5.  Seguido del siguiente comando para ejecutar las migraciones
+```
+python manage.py migrate gestion
+```
+6. Creamos una DATABASE con el siguiente nombre: `django_rkg_revenge\`
+
 
