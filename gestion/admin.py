@@ -18,9 +18,9 @@ class ProductoAdmin(admin.ModelAdmin):
     
     list_display = ['productoId', 'productoNombre', 'productoPrecio']
     
-    search_fields = ['productoNombre', 'productoUnidadMedida']
+    search_fields = ['productoNombre']
     
-    list_filter = ['productoUnidadMedida']
+  
     
     readonly_fields = ['productoId']
 
