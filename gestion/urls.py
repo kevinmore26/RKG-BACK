@@ -20,7 +20,7 @@ urlpatterns = [
 
     path('adopciones/', AdopcionesController.as_view()),
     path('adopcion/<int:id>', AdopcionController.as_view()),
-    path('subir-imagen', SubirImagenController.as_view()),
+    path('subir-imagen/', SubirImagenController.as_view()),
     
     path('refresh-session',TokenRefreshView.as_view()),
     path('productos/', ProductosController.as_view()),
