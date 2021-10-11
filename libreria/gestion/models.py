@@ -1,4 +1,3 @@
-from django.db.models.deletion import CASCADE
 from django.db import models
 
 from .authManager import ManejoCliente
@@ -17,21 +16,21 @@ class ClienteModel(AbstractBaseUser, PermissionsMixin):
         primary_key=True, null= False, unique= True, db_column='id'
     )
     clienteNombre = models.CharField(
-         db_column='nombre',max_length=50, null=True
+         db_column='nombre',max_length=50
     )
     clienteApellido = models.CharField(
-        db_column='apellido',max_length=50, null= True
+        db_column='apellido',max_length=50
     )
     clienteDocumento = models.CharField(
          db_column='documento',max_length=8
     )
     clienteCelular = models.IntegerField(
-        null=True,unique=True,db_column='celular'
+        null=False,unique=True,db_column='celular'
     )
     clienteCorreo = models.EmailField(
-        max_length=50, db_column='email', unique= True,null=False,default=''
+        max_length=50, db_column='email', unique= True,null=False
     )
-    password = models.TextField()
+    password = models.TextField(null=True)
     clienteTipo = models.IntegerField(choices=TIPO_CLIENTE,db_column = 'tipo',default=3 )
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

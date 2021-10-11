@@ -4,8 +4,8 @@ from rest_framework import response, status
 from rest_framework.generics import CreateAPIView, ListCreateAPIView
 from rest_framework.request import Request
 from rest_framework.response import Response
-from .serializador import ImagenSerializer, RegistroSerializer, PlatoSerializer
-from .models import PlatoModel
+from .serializador import  RegistroSerializer
+# from .models import PlatoModel
 
 
 class RegistroContoller (CreateAPIView):

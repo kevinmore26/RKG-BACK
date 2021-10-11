@@ -21,15 +21,15 @@ class ManejoCliente(BaseUserManager):
 
         return usuarioCreado
     
-    def create_superuser(self,clienteNombre,clienteApellido,clienteDocumento,clienteCelular,clienteCorreo,password,clienteTipo):
+    def create_superuser(self,clienteCorreo,clienteNombre,clienteApellido,clienteDocumento,clienteCelular,clienteTipo,password=None):
         nuevoUsuario = self.create_user(
            clienteNombre,
            clienteApellido,
            clienteDocumento,
            clienteCelular,
            clienteCorreo,
+           clienteTipo,
            password,
-           clienteTipo
         )
 
         nuevoUsuario.is_superuser = True

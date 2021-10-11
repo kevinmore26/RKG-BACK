@@ -1,7 +1,7 @@
 from django.core.files.base import ContentFile
 from rest_framework import serializers
 from rest_framework.fields import ImageField
-from .models import ClienteModel, PlatoModel, UsuarioModel
+from .models import ClienteModel
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.conf import settings
@@ -24,7 +24,7 @@ class RegistroSerializer( serializers.ModelSerializer):
             clienteTipo = clienteTipo
         )
         
-        nuevoCliente. make_password(password)
+        #nuevoCliente. make_password(password)
         nuevoCliente.set_password(password)
         nuevoCliente.save()
         return nuevoCliente
