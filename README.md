@@ -1,6 +1,13 @@
- ![logo](https://user-images.githubusercontent.com/84250823/136850833-c994078c-cea3-40b7-b725-9f794ea3e130.jpg)
- # PROYECTO BACKEND RKG 
+
+ <p align="center" style="background-color:white">
+ <a href="![logo](https://user-images.githubusercontent.com/84250823/136850833-c994078c-cea3-40b7-b725-9f794ea3e130.jpg)" rel="noopener">
+ <img src="https://user-images.githubusercontent.com/84250823/136850833-c994078c-cea3-40b7-b725-9f794ea3e130.jpg" alt="RAVN logo"></a>
+</p>
+
+<p align="center" style="background-color:white; font-size:"40px"> PROYECTO BACKEND RKG </p>
+ 
 ## E-commerce de mascotas - Tienda de mascotas y apartado de adopciones
+ 
 AUTORES 💻 :
 
 >  _Kevin More_ 😎
