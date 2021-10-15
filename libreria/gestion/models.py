@@ -36,7 +36,9 @@ class ClienteModel(models.Model):
         verbose_name_plural = 'clientes'
 class ProductoModel(models.Model):
 
-        
+    class OpcionesOF(models.TextChoices):
+        HAYOFERTA = 'SI', 'SIHAY'
+        NOHAYOFERTA = 'NO', 'NOHAY'    
 
     # Tipos de datos del ORM => https://docs.djangoproject.com/en/3.2/ref/models/fields/#field-types
     # Parametros genericos de lo tipos de datos => https://docs.djangoproject.com/en/3.2/ref/models/fields/#field-options
@@ -57,6 +59,9 @@ class ProductoModel(models.Model):
 
     productoCantidad = models.IntegerField(
         db_column='cantidad', null=False, default=0)
+
+    productoOferta = models.TextField(
+        choices=OpcionesOF.choices, default=OpcionesOF.NOHAYOFERTA, db_column='oferta')
 
     # se actualizara su valor cuando el registro sufra alguna modificacion
     # auto_now => agarrara la fecha actual cuando parte del registro o en su totalidad sea modificada
