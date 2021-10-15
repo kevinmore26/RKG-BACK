@@ -11,7 +11,7 @@ from .serializers import (
                           VentaSerializer,
                           AdopcionSerializer,
                           ImagenSerializer,
-                          RegistroSerializer,ProductoSerializer)
+                          RegistroSerializer,ProductoSerializer,)
                         
 from rest_framework import status
 
@@ -31,32 +31,26 @@ from django.conf import settings
 
 
 
-class PruebaController(APIView):
-    def get(self, request, format=None):
-        return Response(data={'message': 'Exito'}, status=200)
 
-    def post(self, request: Request, format=None):
-        print(request.data)
-        return Response(data={'message': 'Hiciste post'})
         # -----------------------------------------------------------------------------------
 
 class ProductosController(ListCreateAPIView):
     # pondremos la consulta de ese modelo en la bd
     queryset = ProductoModel.objects.all() #SELECT * FROM productos;
     serializer_class = ProductoSerializer
-    pagination_class = PaginacionPersonalizada
+    # pagination_class = PaginacionPersonalizada
 
     #Todo comentado para que funcione la paginacion / desactivar para que funcione listado de productos
 
-    # def get(self, request):
-    #     respuesta = self.get_queryset().filter(productoEstado=True).all()
-    #     print(respuesta)
-    #     respuesta_serializada = self.serializer_class(
-    #         instance=respuesta, many=True)
-    #     return Response(data={
-    #         "message": None,
-    #         "content": respuesta_serializada.data
-    #     })
+    def get(self, request):
+        respuesta = self.get_queryset().all()
+        print(respuesta)
+        respuesta_serializada = self.serializer_class(
+            instance=respuesta, many=True)
+        return Response(data={
+            "message": None,
+            "content": respuesta_serializada.data
+        })
     
     def post(self, request: Request):
         print(request.data)
@@ -137,7 +131,7 @@ class ProductoController(APIView):
                 "content": None
             }, status=status.HTTP_404_NOT_FOUND)
 
-        productoEncontrado.productoEstado = False
+        
         productoEncontrado.save()
 
         serializador = ProductoSerializer(instance=productoEncontrado)
@@ -196,7 +190,7 @@ class AdopcionController(RetrieveUpdateDestroyAPIView):
                 "message": "Adopcion no encontrada",
                 "content": None
             }, status=status.HTTP_404_NOT_FOUND)
-
+        
         serializador = AdopcionSerializer(instance=adopcionEncontrada)
         return Response(data={
             "message": "Adopcion encontrada",
@@ -251,6 +245,48 @@ class AdopcionController(RetrieveUpdateDestroyAPIView):
         return Response(data={
             "message": "Adopcion eliminado exitosamente",
             "content": serializador.data
+        })
+
+
+class BuscadorAdoptadoController(RetrieveAPIView):
+    serializer_class = AdopcionSerializer
+
+    def get(self, request: Request):
+        nombre = request.query_params.get('nombre')
+        estado = request.query_params.get('estado')
+        animal = request.query_params.get('animal')
+        id = request.query_params.get('id')
+        adopcionEncontrado = None
+        if id:
+            adopcionEncontrado: QuerySet = AdopcionModel.objects.filter(
+                adopcionId=id)
+
+            # data = self.serializer_class(instance=clienteEncontrado, many=True)
+
+            # return Response({'content': data.data})
+        if estado:
+            if adopcionEncontrado is not None:
+                adopcionEncontrado = adopcionEncontrado.filter(
+                    adopcionEstado__icontains=estado).all()
+            else:
+                adopcionEncontrado = AdopcionModel.objects.filter(
+                    adopcionEstado__icontains=estado).all()
+
+        if nombre:
+            if adopcionEncontrado is not None:
+                adopcionEncontrado = adopcionEncontrado.filter(
+                    adopcionNombre__icontains=nombre).all()
+            else:
+                adopcionEncontrado = AdopcionModel.objects.filter(
+                    adopcionNombre__icontains=nombre).all()
+
+        
+
+        data = self.serializer_class(instance=adopcionEncontrado, many=True)
+        print(data.data)
+        return Response(data={
+            'message': 'Los adoptados son:',
+            'content': data.data
         })
     
 class SubirImagenController(CreateAPIView):

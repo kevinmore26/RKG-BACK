@@ -158,6 +158,10 @@ class AdopcionModel(models.Model):
         PEQUEÑO = 'P', 'PEQUEÑO' 
         MEDIANO = 'M', 'MEDIANO' 
         GRANDE = 'G', 'GRANDE' 
+
+    estadoAdoptado = [(1,'ADOPTADO'),(2,'NO_ADOPTADO')]
+
+
     adopcionId = models.AutoField(
         primary_key=True, null=False, unique=True, db_column='id')
 
@@ -175,6 +179,10 @@ class AdopcionModel(models.Model):
     adopcionFoto = models.ImageField(
         upload_to='adopciones/', db_column='foto', null=True)
     
+    adopcionEstado=models.BooleanField(
+        db_column='estado', default=True, null=False)
+    adopcionAnimal=models.IntegerField(choices=estadoAdoptado,db_column='estado_adoptado', null=False,default=2)
+
 
     # place = models.OneToOneField(
     #     Place,

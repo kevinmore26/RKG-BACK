@@ -35,11 +35,18 @@ class RegistroSerializer( serializers.ModelSerializer):
         }
 
 class AdopcionSerializer(serializers.ModelSerializer):
+    
     adopcionFoto=serializers.CharField(max_length=100)
     class Meta:
         model=AdopcionModel
         
         fields='__all__'
+
+# class AdoptadoSerializer(serializers.ModelSerializer):
+#     clienteAdopcion=AdopcionSerializer(many=True)
+#     class Meta:
+#         model=AdopcionModel
+        
 
 
 class DetalleVentaSerializer(serializers.Serializer):
