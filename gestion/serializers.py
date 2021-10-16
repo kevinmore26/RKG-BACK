@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import AdopcionModel, ProductoModel, clienteModel,clienteModel
+from .models import AdopcionModel, DetallePedidoModel,PedidoModel, ProductoModel, clienteModel,clienteModel
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.conf import settings
 from django.core.files.storage import default_storage
@@ -46,18 +46,32 @@ class AdopcionSerializer(serializers.ModelSerializer):
 #     clienteAdopcion=AdopcionSerializer(many=True)
 #     class Meta:
 #         model=AdopcionModel
-        
-
 
 class DetalleVentaSerializer(serializers.Serializer):
     cantidad = serializers.IntegerField(required=True)
     producto_id = serializers.IntegerField(required=True)
+    
 
 
 class VentaSerializer(serializers.Serializer):
     cliente_id = serializers.IntegerField(min_value=0, required=True)
     vendedor_id = serializers.IntegerField(min_value=0, required=True)
     detalle = DetalleVentaSerializer(many=True, required=True)
+class FiltroPedidoSerializer(serializers.Serializer):
+   
+    class Meta:
+        model=PedidoModel
+        fields='__all__'
+    
+        
+class PedidoSerializer(serializers.Serializer):
+    pedidoDetalles=FiltroPedidoSerializer(many=True, required=True)
+    
+    class Meta:
+        model=PedidoModel,DetallePedidoModel
+        fields='__all__'
+   
+
 
 
 class ImagenSerializer(serializers.Serializer):

@@ -8,7 +8,8 @@ from .views import (
                     ProductosController,
                     ProductoController,
                     VentaController,
-                    BuscadorAdoptadoController)
+                    BuscadorAdoptadoController,
+                    BuscadorPedidoController)
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
                     
@@ -25,7 +26,9 @@ urlpatterns = [
     path('refresh-session',TokenRefreshView.as_view()),
     path('productos/', ProductosController.as_view()),
     path('producto/<int:id>', ProductoController.as_view()),
+    path('buscar-pedido', BuscadorPedidoController.as_view()),
     path('pedido', VentaController.as_view()),
+    
    
 ]
 

@@ -11,7 +11,9 @@ from .serializers import (
                           VentaSerializer,
                           AdopcionSerializer,
                           ImagenSerializer,
-                          RegistroSerializer,ProductoSerializer,)
+                          RegistroSerializer,ProductoSerializer,
+                          DetalleVentaSerializer,
+                          PedidoSerializer)
                         
 from rest_framework import status
 
@@ -288,7 +290,7 @@ class BuscadorAdoptadoController(RetrieveAPIView):
             'message': 'Los adoptados son:',
             'content': data.data
         })
-    
+
 class SubirImagenController(CreateAPIView):
     serializer_class = ImagenSerializer
 
@@ -374,4 +376,42 @@ class VentaController(CreateAPIView):
                 'message': 'Error al agregar la venta',
                 'content': data.errors
             })
+# --------------------------------------
+class BuscadorPedidoController(RetrieveAPIView):
+    serializer_class = PedidoSerializer
 
+    def get(self, request: Request):
+        id = request.query_params.get('id')
+        nombre = request.query_params.get('nombre')
+        fecha = request.query_params.get('fecha')
+        total = request.query_params.get('total')
+        
+        
+        pedidoEncontrado = None
+        if id:
+            pedidoEncontrado: QuerySet = PedidoModel.objects.filter(
+                pedidoId=id)
+
+        if fecha:
+            if pedidoEncontrado is not None:
+                pedidoEncontrado = pedidoEncontrado.filter(
+                    pedidoFecha__icontains=fecha).all()
+            else:
+                pedidoEncontrado = PedidoModel.objects.filter(
+                    pedidoFecha__icontains=fecha).all()
+        
+        if total:
+            if pedidoEncontrado is not None:
+                pedidoEncontrado = pedidoEncontrado.filter(
+                    pedidoTotal__icontains=total).all()
+            else:
+                pedidoEncontrado = PedidoModel.objects.filter(
+                    pedidoTotal__icontains=total).all()
+
+        data = self.serializer_class(instance=pedidoEncontrado, many=True)
+        print(data.data)
+        return Response(data={
+            'message': 'Los pedidos son:',
+            'content': data.data
+        })
+# ---------------------------------------
