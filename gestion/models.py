@@ -130,8 +130,6 @@ class DetallePedidoModel(models.Model):
     pedido = models.ForeignKey(
         to=PedidoModel, related_name='pedidoDetalles', db_column='pedido_id', on_delete=models.PROTECT)
 
-
-
     class Meta:
         db_table = 'detalles'
 

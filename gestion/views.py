@@ -13,7 +13,8 @@ from .serializers import (
                           ImagenSerializer,
                           RegistroSerializer,ProductoSerializer,
                           DetalleVentaSerializer,
-                          PedidoSerializer)
+                          PedidoSerializer,
+                          ClienteSerializer)
                         
 from rest_framework import status
 
@@ -415,3 +416,30 @@ class BuscadorPedidoController(RetrieveAPIView):
             'content': data.data
         })
 # ---------------------------------------
+class BuscadorClienteController(RetrieveAPIView):
+    serializer_class = ClienteSerializer
+
+    def get(self, request: Request):
+        nombre = request.query_params.get('nombre')
+        documento = request.query_params.get('documento')
+
+        clienteEncontrado = None
+        if documento:
+            clienteEncontrado: QuerySet = clienteModel.objects.filter(
+                clienteDocumento=documento)
+
+
+        if nombre:
+            if clienteEncontrado is not None:
+                clienteEncontrado = clienteEncontrado.filter(
+                    clienteNombre__icontains=nombre).all()
+            else:
+                clienteEncontrado = clienteModel.objects.filter(
+                    clienteNombre__icontains=nombre).all()
+
+        data = self.serializer_class(instance=clienteEncontrado, many=True)
+        print(data.data)
+        return Response(data={
+            'message': 'Los usuarios son:',
+            'content': data.data
+        })
