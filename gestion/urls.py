@@ -1,4 +1,5 @@
 from django.urls import path
+from rest_framework import views
 from .views import (                  
                     
                     AdopcionesController,
@@ -7,7 +8,9 @@ from .views import (
                     RegistroController,
                     ProductosController,
                     ProductoController,
-                    VentaController)
+                    VentaController,
+                    BuscadorClienteController,
+                    ClientesEspecialesController)
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
                     
@@ -17,6 +20,8 @@ urlpatterns = [
     
     path('registro', RegistroController.as_view()),
     path('login', TokenObtainPairView.as_view()),
+    path('cliente',BuscadorClienteController.as_view()),
+    path('cliente_especial',ClientesEspecialesController.as_view()),
 
     path('adopciones/', AdopcionesController.as_view()),
     path('adopcion/<int:id>', AdopcionController.as_view()),

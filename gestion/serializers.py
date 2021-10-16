@@ -1,3 +1,4 @@
+# from typing_extensions import Required
 from rest_framework import serializers
 from .models import AdopcionModel, ProductoModel, clienteModel,clienteModel
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -33,6 +34,31 @@ class RegistroSerializer( serializers.ModelSerializer):
                 'write_only': True,    
             }
         }
+
+class ClienteSerializer(serializers.ModelSerializer):
+    # https://www.django-rest-framework.org/api-guide/fields/
+    clienteCorreo = serializers.EmailField(
+        max_length=50,required=True, trim_whitespace=True )
+    
+    clienteDocumento = serializers.CharField(
+        max_length=8, required=False, trim_whitespace=True)
+    
+    
+    class Meta:
+        model = clienteModel
+        fields = '__all__'
+
+class Cliente_Estrella_Serializer(serializers.Serializer):
+    id = serializers.IntegerField(required=True)
+    nombre = serializers.CharField(max_length=50,required=True)
+    apellido = serializers.CharField(max_length=50,required=False, allow_blank=True)
+    email = serializers.EmailField(max_length=50,required=True)
+    documento = serializers.CharField(max_length=8,required=True)
+    celular = serializers.CharField(max_length=8,required=False, allow_null=True)
+    is_staff = serializers.BooleanField(required=True)
+    cuenta = serializers.IntegerField(required=True)
+    
+
 
 class AdopcionSerializer(serializers.ModelSerializer):
     adopcionFoto=serializers.CharField(max_length=100)

@@ -1,18 +1,21 @@
 from typing import List
 from django.shortcuts import render
-from rest_framework.views import APIView
+from rest_framework import serializers
+from rest_framework.views import APIView, exception_handler
 from django.db.models.query import QuerySet
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
+import requests as solicitudes
 from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
 from .models import  ProductoModel, clienteModel,AdopcionModel,clienteModel,DetallePedidoModel,PedidoModel
 from .serializers import (
                           VentaSerializer,
                           AdopcionSerializer,
                           ImagenSerializer,
-                          RegistroSerializer,ProductoSerializer)
-                        
+                          RegistroSerializer,ProductoSerializer,ClienteSerializer)
+
+from gestion.serializers import Cliente_Estrella_Serializer
 from rest_framework import status
 
 from .utils import  PaginacionPersonalizada
@@ -161,6 +164,166 @@ class RegistroController (CreateAPIView):
                 "message": "Error al crear el usuario",
                 "content": data.errors
             })
+
+# class ClienteController(CreateAPIView):
+#     queryset = clienteModel.objects.all()
+#     serializer_class = RegistroSerializer
+
+#     def post(self, request: Request):
+
+#         data: Serializer = self.get_serializer(data=request.data)
+#         if data.is_valid():
+#             # .validated_data => es la data ya validada y se crea a raiz de la llamada al metodo is_valid()
+#             # .data => es la data sin validacion
+#             # .initial_data => data inicial tal y como me la esta pasando el cliente
+#             # print(data.validated_data)
+#             # print(data.initial_data)
+#             # print(data.data)
+#             documento = data.validated_data.get('clienteDocumento')
+#             direccion = data.validated_data.get('clienteDireccion')
+
+#             url = 'https://apiperu.dev/api/'
+#             if len(documento) == 8:
+#                 # si es DNI validar que en el body venga el clienteDireccion
+#                 if direccion is None:
+#                     return Response(data={
+#                         'message': 'Los clientes con DNI se debe proveer la direccion'
+#                     }, status=status.HTTP_400_BAD_REQUEST)
+#                 url += 'dni/'
+
+#             elif len(documento) == 11:
+#                 url += 'ruc/'
+
+#             resultado = solicitudes.get(url+documento, headers={
+#                 'Content-Type': 'application/json',
+#                 'Authorization': 'Bearer '+environ.get('APIPERU_TOKEN')
+#             })
+#             # print(resultado.json())
+#             success = resultado.json().get('success')
+
+#             # validar si el dni existe o no
+#             if success is False:
+#                 return Response(data={
+#                     'message': 'Documento incorrecto'
+#                 }, status=status.HTTP_400_BAD_REQUEST)
+
+#             data = resultado.json().get('data')
+#             nombre = data.get('nombre_completo') if data.get(
+#                 'nombre_completo') else data.get('nombre_o_razon_social')
+#             # hacer algo similar con la direccion
+#             # si la direccion no es vacia (tiene contenido ) su valor seguira siendo la direccion, caso contrario extraeremos la direccion del resultado de APIPERU
+#             direccion = direccion if direccion else data.get(
+#                 'direccion_completa')
+
+#             # guardado del cliente en la bd
+#             nuevoCliente = clienteModel(
+#                 clienteNombre=nombre, clienteDocumento=documento, clienteDireccion=direccion)
+
+#             nuevoCliente.save()
+
+#             nuevoClienteSerializado: Serializer = self.serializer_class(
+#                 instance=nuevoCliente)
+
+#             return Response(data={
+#                 'message': 'Cliente agregado exitosamente',
+#                 'content': nuevoClienteSerializado.data
+#             }, status=status.HTTP_201_CREATED)
+#         else:
+#             return Response(data={
+#                 'message': 'Error al ingresar el cliente',
+#                 'content': data.errors
+#             }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class BuscadorClienteController(RetrieveAPIView):
+    serializer_class = ClienteSerializer
+
+    def get(self, request: Request):
+        # print(request.query_params)
+        # primero validar si me esta pasando el nombre o el documento
+        correo = request.query_params.get('correo')
+        documento = request.query_params.get('dni')
+
+        # si tengo documento hare una busqueda todos los clientes por ese documento
+        clienteEncontrado = None
+        if documento:
+            clienteEncontrado: QuerySet = clienteModel.objects.filter(
+                clienteDocumento=documento)
+
+            # data = self.serializer_class(instance=clienteEncontrado, many=True)
+
+            # return Response({'content': data.data})
+
+        if correo:
+            # from django.db.models.functions import Upper
+            # resultado = ClienteModel.objects.annotate(
+            #     clienteNombre_upper=Upper('eduardo')).all()
+            # print(resultado)
+            # https://docs.djangoproject.com/en/3.2/ref/models/querysets/#field-lookups
+            if clienteEncontrado is not None:
+                clienteEncontrado = clienteEncontrado.filter(
+                    clienteCorreo__icontains=correo).all()
+            else:
+                clienteEncontrado = clienteModel.objects.filter(
+                    clienteCorreo__icontains=correo).all()
+
+        # TODO: 1. agregar los test para el cliente controler y su busqueda, 2. dar la opcion que se puedan enviar el documento y nombre a la vez y que se haga el filtro de ambos si es que provee
+
+        data = self.serializer_class(instance=clienteEncontrado, many=True)
+        return Response(data={
+            'message': 'Los usuarios son:',
+            'content': data.data
+        })
+
+from django.db import connection
+class ClientesEspecialesController(APIView):
+    # Cliente_Estrella_Serializer()
+    serializer_class = Cliente_Estrella_Serializer
+    # print(serializer_class)
+    def get(self,request):
+        
+        # lista_clientes = ()
+        with connection.cursor() as cursor:
+            cursor.execute('select t2.id,t2.nombre,t2.apellido,t2.email,t2.documento,t2.celular,t2.is_staff,count(*) as cuenta from public.pedidos t1 join public.clientes t2 on t1.cliente_id = t2.id where is_active = true group by t2.id,t2.nombre, t2.apellido,t2.email,t2.documento,t2.celular,t2.is_staff order by cuenta desc')
+            resultado = cursor.fetchall()
+            resultado_dic=[]
+            for registro in resultado:
+                diccionario = {
+                    'id': registro[0],
+                    'nombre':registro[1],
+                    'apellido':registro[2],
+                    'email':registro[3],
+                    'documento':registro[4],
+                    'celular':registro[5],
+                    'is_staff':registro[6],
+                    'cuenta':registro[7],
+                }
+                resultado_dic.append(diccionario)
+            print(resultado)
+            data = self.serializer_class(data= resultado_dic, many=True)
+            data.is_valid(raise_exception=True)
+            print(data.data)
+            return Response(data={
+            "message":None,
+            "content":data.data
+        })
+        lista_clientes: QuerySet = clienteModel.objects.raw('select t2.id,t2.nombre,t2.apellido,t2.email,t2.documento,t2.celular,t2.is_staff,count(*) as cuenta from public.pedidos t1 join public.clientes t2 on t1.cliente_id = t2.id where is_active = true group by t2.id,t2.nombre, t2.apellido,t2.email,t2.documento,t2.celular,t2.is_staff order by cuenta desc')
+        print(lista_clientes)
+        # lista_data = []
+        # # for data in lista_clientes:
+        #     lista_data.append(serializers.Serializer('json',data))
+        #     print(data)
+        data = self.serializer_class(instance=lista_clientes,many=False)
+        print(lista_clientes)        
+        
+        # except:
+        #     return Response(data={
+        #     "message": None,
+        #     "content": 'No se encontro información'
+        # })
+
+        
+
 
 class AdopcionesController(ListCreateAPIView):
     queryset = AdopcionModel.objects.all()
