@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import AdopcionModel, ProductoModel, clienteModel,clienteModel
+from .models import AdopcionModel, DetallePedidoModel,PedidoModel, ProductoModel, clienteModel
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.conf import settings
 from django.core.files.storage import default_storage
@@ -35,22 +35,47 @@ class RegistroSerializer( serializers.ModelSerializer):
         }
 
 class AdopcionSerializer(serializers.ModelSerializer):
+    
     adopcionFoto=serializers.CharField(max_length=100)
     class Meta:
         model=AdopcionModel
         
         fields='__all__'
 
+# class AdoptadoSerializer(serializers.ModelSerializer):
+#     clienteAdopcion=AdopcionSerializer(many=True)
+#     class Meta:
+#         model=AdopcionModel
+class ClienteSerializer(serializers.ModelSerializer):
+    
+    clienteNombre=serializers.CharField(max_length=45, required=False,trim_whitespace=True,read_only=True)
+   
+    # clienteSexo=serializers.CharField(required=True,max_length=5)
+    class Meta:
+        model = clienteModel
+        fields = '__all__'
+
 
 class DetalleVentaSerializer(serializers.Serializer):
     cantidad = serializers.IntegerField(required=True)
     producto_id = serializers.IntegerField(required=True)
+    
 
 
 class VentaSerializer(serializers.Serializer):
     cliente_id = serializers.IntegerField(min_value=0, required=True)
     vendedor_id = serializers.IntegerField(min_value=0, required=True)
     detalle = DetalleVentaSerializer(many=True, required=True)
+
+class FiltroPedidoSerializer(serializers.Serializer):
+   
+    class Meta:
+        model=PedidoModel
+        fields='__all__'
+    
+
+
+
 
 
 class ImagenSerializer(serializers.Serializer):
@@ -73,3 +98,18 @@ class ProductoSerializer(serializers.ModelSerializer):
         model = ProductoModel
         
         fields='__all__'
+
+
+class DetallePedidoSerializer(serializers.ModelSerializer)  :
+    producto = ProductoSerializer()
+    class Meta:
+        model=DetallePedidoModel
+        fields='__all__'
+
+class PedidoSerializer(serializers.ModelSerializer):
+    pedidoDetalles=DetallePedidoSerializer(many=True)
+    
+    class Meta:
+        model=PedidoModel
+        fields='__all__'
+   

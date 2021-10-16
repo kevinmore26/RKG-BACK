@@ -40,10 +40,10 @@ class ProductoModel(models.Model):
 
     # se actualizara su valor cuando el registro sufra alguna modificacion
     # auto_now => agarrara la fecha actual cuando parte del registro o en su totalidad sea modificada
-    updatedAt = models.DateTimeField(db_column='updated_at', auto_now=True)
+    updatedAt = models.DateField(db_column='updated_at', auto_now=True)
 
     # auto_now_add => cuando se cree un nuevo registro, agarrara la fecha actual y lo creara en esta columna
-    createdAt = models.DateTimeField(db_column='created_at', auto_now_add=True)
+    createdAt = models.DateField(db_column='created_at', auto_now_add=True)
 
     def __str__(self):
         return self.productoNombre
@@ -99,7 +99,7 @@ class clienteModel(AbstractBaseUser, PermissionsMixin):
 class PedidoModel(models.Model):
     pedidoId = models.AutoField(primary_key=True, db_column='id', unique=True)
 
-    pedidoFecha = models.DateTimeField(auto_now_add=True, db_column='fecha')
+    pedidoFecha = models.DateField(auto_now_add=True, db_column='fecha')
 
     pedidoTotal = models.DecimalField(
         max_digits=5, decimal_places=2, db_column='total')
@@ -113,21 +113,7 @@ class PedidoModel(models.Model):
     class Meta:
         db_table = 'pedidos'
 
-class MetodoPagoModel(models.Model):
 
-    class OpcionesPago(models.TextChoices):
-        TARJETA='T','TARJETA'
-        CONTRAENTREGA='CE','CONTRAENTREGA'
-
-    metodoPagoId = models.AutoField(db_column='id', primary_key=True, null=False, unique=True)
-
-    metodoTipo = models.TextField(db_column='metodo', choices=OpcionesPago.choices,default=OpcionesPago.TARJETA)
-    metodoNro = models.IntegerField(db_column='nro')
-
-    class Meta: 
-        db_table = 'metodo_pago'
-
-        #default=OpcionesUM.UNIDAD
 
 class DetallePedidoModel(models.Model):
     detalleId = models.AutoField(primary_key=True, db_column='id', unique=True)
@@ -140,12 +126,9 @@ class DetallePedidoModel(models.Model):
 
     producto = models.ForeignKey(
         to=ProductoModel, related_name='productoDetalles', db_column='producto_id', on_delete=models.PROTECT)
-
+    
     pedido = models.ForeignKey(
         to=PedidoModel, related_name='pedidoDetalles', db_column='pedido_id', on_delete=models.PROTECT)
-
-    metodoPago = models.ForeignKey(to=MetodoPagoModel, db_column='metodo_id', null=False, related_name='ordenMetodo', on_delete=models.PROTECT)
-
 
     class Meta:
         db_table = 'detalles'
@@ -158,6 +141,10 @@ class AdopcionModel(models.Model):
         PEQUEÑO = 'P', 'PEQUEÑO' 
         MEDIANO = 'M', 'MEDIANO' 
         GRANDE = 'G', 'GRANDE' 
+
+    estadoAdoptado = [(1,'ADOPTADO'),(2,'NO_ADOPTADO')]
+
+
     adopcionId = models.AutoField(
         primary_key=True, null=False, unique=True, db_column='id')
 
@@ -175,6 +162,9 @@ class AdopcionModel(models.Model):
     adopcionFoto = models.ImageField(
         upload_to='adopciones/', db_column='foto', null=True)
     
+    adopcionEstado=models.BooleanField(
+        db_column='estado', default=True, null=False)
+    adopcionAnimal=models.IntegerField(choices=estadoAdoptado,db_column='estado_adoptado', null=False,default=2)
 
     # place = models.OneToOneField(
     #     Place,
