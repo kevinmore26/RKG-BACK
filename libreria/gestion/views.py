@@ -69,18 +69,7 @@ class ProductosController(ListCreateAPIView):
 
 
 
-    # def get(self, request):
-    #     respuesta = self.get_queryset().filter(productoEstado=True).all()
-    #     print(respuesta)
-    #     respuesta_serializada = self.serializer_class(
-    #         instance=respuesta, many=True)
-    #     return Response(data={
-    #         "message": None,
-    #         "content": respuesta_serializada.data
-    #     })
-    
-
-
+ 
 class ProductoController(RetrieveUpdateDestroyAPIView):
     serializer_class = ProductoSerializer
     queryset = ProductoModel.objects.all()
@@ -151,7 +140,7 @@ class ProductoController(RetrieveUpdateDestroyAPIView):
                 "content": serializador.errors
             }, status=status.HTTP_400_BAD_REQUEST)
 
-    ##Todo Delete estado
+    #! Delete para estado
     def delete(self, request, id):
         # actualizacion del estado del producto
         productoEncontrado: ProductoModel = ProductoModel.objects.filter(
