@@ -56,7 +56,7 @@ class ProductosController(ListCreateAPIView):
     #! Get para solicitar solo productos de estado true
 
     def get(self, request):
-        respuesta = self.get_queryset().filter(productoEstado=True).all()
+        respuesta = self.get_queryset().filter(productoDisponible=True).all()
         print(respuesta)
 
         respuesta_serializada = self.serializer_class(
