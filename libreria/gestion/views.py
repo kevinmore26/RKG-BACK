@@ -27,13 +27,13 @@ class ProductosController(ListCreateAPIView):
     pagination_class = PaginacionPersonalizada
 
 
-
-    def get(self, request):
-        data = self.serializer_class(instance=self.get_queryset(), many=True)
-        return Response(data={
-            "message": None,
-            "content": data.data
-        })
+    #!  Get para todos los productos con todos los estados
+    # def get(self, request):
+    #     data = self.serializer_class(instance=self.get_queryset(), many=True)
+    #     return Response(data={
+    #         "message": None,
+    #         "content": data.data
+    #     })
 
     def post(self, request: Request):
         # print(request.data)
@@ -53,7 +53,19 @@ class ProductosController(ListCreateAPIView):
 
 
 
-    #Todo comentado para que funcione la paginacion / desactivar para que funcione listado de productos (get)
+    #! Get para solicitar solo productos de estado true
+
+    def get(self, request):
+        respuesta = self.get_queryset().filter(productoEstado=True).all()
+        print(respuesta)
+
+        respuesta_serializada = self.serializer_class(
+            instance=respuesta, many=True)
+
+        return Response(data={
+            "message": None,
+            "content": respuesta_serializada.data
+        })
 
 
 
@@ -138,6 +150,33 @@ class ProductoController(RetrieveUpdateDestroyAPIView):
                 "message": "Error al actualizar el producto",
                 "content": serializador.errors
             }, status=status.HTTP_400_BAD_REQUEST)
+
+    ##Todo Delete estado
+    def delete(self, request, id):
+        # actualizacion del estado del producto
+        productoEncontrado: ProductoModel = ProductoModel.objects.filter(
+            productoId=id).first()
+
+        if productoEncontrado is None:
+            return Response(data={
+                "message": "Producto no encontrado",
+                "content": None
+            }, status=status.HTTP_404_NOT_FOUND)
+
+        #modificar su estado a False
+        productoEncontrado.productoEstado = False
+        productoEncontrado.save()
+
+        serializador = ProductoSerializer(instance=productoEncontrado)
+
+        return Response(data={
+            "message": "Producto eliminado exitosamente",
+            "content": serializador.data
+        })
+        #return productoActualizado
+        
+
+
 
 class SubirImagenController(CreateAPIView):
     serializer_class= ImagenSerializer
