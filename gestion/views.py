@@ -13,8 +13,10 @@ from .serializers import (
                           ImagenSerializer,
                           RegistroSerializer,ProductoSerializer,
                           DetalleVentaSerializer,
+                          Cliente_Estrella_Serializer,
                           PedidoSerializer,
                           ClienteSerializer)
+from django.db import connection
                         
 from rest_framework import status
 
@@ -442,4 +444,38 @@ class BuscadorClienteController(RetrieveAPIView):
         return Response(data={
             'message': 'Los usuarios son:',
             'content': data.data
+        })
+
+
+
+class ClientesEspecialesController(APIView):
+    # Cliente_Estrella_Serializer()
+    serializer_class = Cliente_Estrella_Serializer
+    # print(serializer_class)
+    def get(self,request):
+        
+        # lista_clientes = ()
+        with connection.cursor() as cursor:
+            cursor.execute('select t2.id,t2.nombre,t2.apellido,t2.email,t2.documento,t2.celular,t2.is_staff,count(*) as cuenta from public.pedidos t1 join public.clientes t2 on t1.cliente_id = t2.id where is_active = true group by t2.id,t2.nombre, t2.apellido,t2.email,t2.documento,t2.celular,t2.is_staff order by cuenta desc')
+            resultado = cursor.fetchall()
+            resultado_dic=[]
+            for registro in resultado:
+                diccionario = {
+                    'id': registro[0],
+                    'nombre':registro[1],
+                    'apellido':registro[2],
+                    'email':registro[3],
+                    'documento':registro[4],
+                    'celular':registro[5],
+                    'is_staff':registro[6],
+                    'cuenta':registro[7],
+                }
+                resultado_dic.append(diccionario)
+            print(resultado)
+            data = self.serializer_class(data= resultado_dic, many=True)
+            data.is_valid(raise_exception=True)
+            print(data.data)
+            return Response(data={
+            "message":None,
+            "content":data.data
         })

@@ -55,6 +55,17 @@ class ClienteSerializer(serializers.ModelSerializer):
         model = clienteModel
         fields = '__all__'
 
+        
+class Cliente_Estrella_Serializer(serializers.Serializer):
+    id = serializers.IntegerField(required=True)
+    nombre = serializers.CharField(max_length=50,required=True)
+    apellido = serializers.CharField(max_length=50,required=False, allow_blank=True)
+    email = serializers.EmailField(max_length=50,required=True)
+    documento = serializers.CharField(max_length=8,required=True)
+    celular = serializers.CharField(max_length=8,required=False, allow_null=True)
+    is_staff = serializers.BooleanField(required=True)
+    cuenta = serializers.IntegerField(required=True)
+
 
 class DetalleVentaSerializer(serializers.Serializer):
     cantidad = serializers.IntegerField(required=True)

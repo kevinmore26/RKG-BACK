@@ -27,7 +27,7 @@ class ProductoModel(models.Model):
       db_column='nombre', null=False, max_length=50, verbose_name='nombre')
     
     productoPrecio = models.DecimalField(
-        max_digits=5, decimal_places=2, db_column='precio', verbose_name='precio')
+        max_digits=9, decimal_places=2, db_column='precio', verbose_name='precio')
 
     productoDescripcion = models.CharField(
         db_column='descripcion', null=False, max_length=100, verbose_name='descripcion')
@@ -102,7 +102,7 @@ class PedidoModel(models.Model):
     pedidoFecha = models.DateField(auto_now_add=True, db_column='fecha')
 
     pedidoTotal = models.DecimalField(
-        max_digits=5, decimal_places=2, db_column='total')
+        max_digits=9, decimal_places=2, db_column='total')
 
     cliente = models.ForeignKey(
         to=clienteModel, related_name='clientePedidos', db_column='cliente_id', on_delete=models.PROTECT)
@@ -122,7 +122,7 @@ class DetallePedidoModel(models.Model):
         db_column='cantidad', null=False, validators=[MinValueValidator(0, 'Valor no puede ser negativo')])
 
     detalleSubTotal = models.DecimalField(
-        max_digits=5, decimal_places=2, db_column='sub_total')
+        max_digits=9, decimal_places=2, db_column='sub_total')
 
     producto = models.ForeignKey(
         to=ProductoModel, related_name='productoDetalles', db_column='producto_id', on_delete=models.PROTECT)
