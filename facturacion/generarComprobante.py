@@ -1,6 +1,5 @@
 from datetime import datetime
 
-
 from .models import ComprobanteModel
 from gestion.models import DetallePedidoModel, PedidoModel
 from django.db import connection
