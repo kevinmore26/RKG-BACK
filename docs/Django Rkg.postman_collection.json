@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"adopcionNombre\":\"MISHIFU\",\r\n    \"adopcionEdad\":\"2\",\r\n    \"adopcionTamaño\":\"P\",\r\n    \"adopcionCaracteristicas\":\"HOLADESDEELBACKEND\",\r\n    \"adopcionFoto\":\"adopcion2.png\"\r\n}",
+							"raw": "{\r\n    \"adopcionNombre\":\"BLANCO\",\r\n    \"adopcionEdad\":\"5\",\r\n    \"adopcionTamaño\":\"P\",\r\n    \"adopcionCaracteristicas\":\"comelona\",\r\n    \"adopcionFoto\":\"http://127.0.0.1:8000/assets/juguete1.png\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -120,54 +120,50 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "operaciones",
-			"item": [
+				},
 				{
-					"name": "/operacion",
+					"name": "/buscar-adoptado",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"tipo\": \"V\",\r\n    \"cliente\": \"74822014\",\r\n    \"detalle\":[\r\n        {\r\n            \"cantidad\": 10,\r\n            \"importe\": 50.00,\r\n            \"producto\": 1\r\n        },\r\n        {\r\n            \"cantidad\": 5,\r\n            \"importe\": 10.20,\r\n            \"producto\": 2\r\n        }\r\n    ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{url_local}}/gestion/operacion/",
+							"raw": "{{url_local}}/gestion/buscar-adoptado?estado=true",
 							"host": [
 								"{{url_local}}"
 							],
 							"path": [
 								"gestion",
-								"operacion",
-								""
+								"buscar-adoptado"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "true"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "/buscar-sinadoptar",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url_local}}/gestion/operacion/1",
+							"raw": "{{url_local}}/gestion/buscar-adoptado?estado=false",
 							"host": [
 								"{{url_local}}"
 							],
 							"path": [
 								"gestion",
-								"operacion",
-								"1"
+								"buscar-adoptado"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "false"
+								}
 							]
 						}
 					},
@@ -195,7 +191,7 @@
 								{
 									"key": "archivo",
 									"type": "file",
-									"src": "/C:/Users/kore_/OneDrive/Escritorio/adopcion2.png"
+									"src": "/C:/Users/kore_/OneDrive/Escritorio/RKG-BACK/media/juguete3.png"
 								}
 							]
 						},
@@ -215,16 +211,145 @@
 			]
 		},
 		{
-			"name": "productos y facturacion",
+			"name": "clientes",
 			"item": [
 				{
-					"name": "http://127.0.0.1:8000/gestion/productos",
+					"name": "/registro",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"productoNombre\":\"pelota\",\r\n    \"productoPrecio\": 15.00,\r\n    \"productoFoto\": \"juguete2.png\",\r\n    \"productoCantidad\":30\r\n}",
+							"raw": "{\r\n    \"clienteNombre\":\"kevinsdadsadasd\",\r\n    \"clienteApellido\":\"moivanre\",\r\n    \"clienteCorreo\":\"kore_1491@hotmail.com\",\r\n    \"clienteTipo\":3,\r\n    \"clientePassword\":\"Welcome123!\",\r\n    \"clienteDocumento\":\"74823094\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/gestion/registro",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"gestion",
+								"registro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/registro-cliente",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/gestion/registro",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"gestion",
+								"registro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/Clientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "/buscar-cliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/buscar-cliente?nombre=lala",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"buscar-cliente"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "lala"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cliente-estrella",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/gestion/cliente_especial",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"gestion",
+								"cliente_especial"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "productos",
+			"item": [
+				{
+					"name": "/productos (Estado)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "/productos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productoNombre\":\"plumilla\",\r\n    \"productoPrecio\": 14.00,\r\n    \"productoFoto\": \"http://127.0.0.1:8000/assets/juguete4.png\",\r\n    \"productoCantidad\":12,\r\n    \"productoDescripcion\":\"circular\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -251,111 +376,65 @@
 					"response": []
 				},
 				{
-					"name": "http://127.0.0.1:8000/gestion/subir-imagen",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "archivo",
-									"type": "file",
-									"src": "/C:/Users/kore_/OneDrive/Escritorio/imagenesproyect/juguete4.png"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/gestion/subir-imagen",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"gestion",
-								"subir-imagen"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "http://127.0.0.1:8000/gestion/registro",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"clienteNombre\":\"kevinsdadsadasd\",\r\n    \"clienteApellido\":\"moivanre\",\r\n    \"clienteCorreo\":\"kore_2608@hotmail.com\",\r\n    \"clienteTipo\":3,\r\n    \"clientePassword\":\"Welcome123!\",\r\n    \"clienteDocumento\":\"74822024\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/gestion/registro",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"gestion",
-								"registro"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "http://127.0.0.1:8000/gestion/productos?pagina=1&cantidad=2",
+					"name": "/producto/{id}",
 					"request": {
 						"method": "GET",
 						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "/producto/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/gestion/productos?pagina=1&cantidad=2",
-							"protocol": "http",
+							"raw": "{{url_local}}/gestion/producto/20",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{url_local}}"
 							],
-							"port": "8000",
 							"path": [
 								"gestion",
-								"productos"
-							],
-							"query": [
-								{
-									"key": "pagina",
-									"value": "1"
-								},
-								{
-									"key": "cantidad",
-									"value": "2"
-								}
+								"producto",
+								"20"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "http://127.0.0.1:8000/gestion/pedido",
+					"name": "/producto/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/producto/1",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"producto",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pedidos_facturacion",
+			"item": [
+				{
+					"name": "/pedido",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cliente_id\": 6,\r\n    \"vendedor_id\": 10,\r\n    \"detalle\": [\r\n        {\r\n            \"cantidad\":4,\r\n            \"producto_id\": 3\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"cliente_id\": 2,\r\n    \"vendedor_id\": 1,\r\n    \"detalle\": [\r\n        {\r\n            \"cantidad\":6,\r\n            \"producto_id\": 1\r\n            \r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -381,7 +460,31 @@
 					"response": []
 				},
 				{
-					"name": "http://127.0.0.1:8000/facturacion/generar-comprobante/",
+					"name": "/buscar-pedido",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/buscar-pedido?id=2",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"buscar-pedido"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/generar-comprobante",
 					"request": {
 						"method": "POST",
 						"header": [],
