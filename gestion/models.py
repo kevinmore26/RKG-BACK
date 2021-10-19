@@ -38,6 +38,9 @@ class ProductoModel(models.Model):
     productoCantidad = models.IntegerField(
         db_column='cantidad', null=False, default=0)
 
+    productoDisponible = models.BooleanField(
+        db_column='disponible', default=True, null=False)
+
     # se actualizara su valor cuando el registro sufra alguna modificacion
     # auto_now => agarrara la fecha actual cuando parte del registro o en su totalidad sea modificada
     updatedAt = models.DateField(db_column='updated_at', auto_now=True)
