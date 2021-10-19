@@ -246,42 +246,6 @@
 					"response": []
 				},
 				{
-					"name": "/registro-cliente",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/gestion/registro",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"gestion",
-								"registro"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/Clientes",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": null
-					},
-					"response": []
-				},
-				{
 					"name": "/buscar-cliente",
 					"request": {
 						"method": "GET",
@@ -334,15 +298,6 @@
 			"name": "productos",
 			"item": [
 				{
-					"name": "/productos (Estado)",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": null
-					},
-					"response": []
-				},
-				{
 					"name": "/productos",
 					"request": {
 						"method": "POST",
@@ -376,11 +331,40 @@
 					"response": []
 				},
 				{
+					"name": "/productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/productos/",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"productos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/producto/{id}",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "{{url_local}}/gestion/producto/4",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"producto",
+								"4"
+							]
+						}
 					},
 					"response": []
 				},

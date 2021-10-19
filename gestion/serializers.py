@@ -41,6 +41,11 @@ class AdopcionSerializer(serializers.ModelSerializer):
         model=AdopcionModel
         
         fields='__all__'
+        extra_kwargs= {
+            'cliente':{
+                'write_only': True,    
+            }
+        }
 
 # class AdoptadoSerializer(serializers.ModelSerializer):
 #     clienteAdopcion=AdopcionSerializer(many=True)
@@ -54,6 +59,26 @@ class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = clienteModel
         fields = '__all__'
+        extra_kwargs= {
+            'password':{
+                'write_only': True,    
+            },
+            'is_active':{
+                'write_only': True,    
+            },
+            'groups':{
+                'write_only': True,    
+            },
+            'user_permissions':{
+                'write_only': True,    
+            },
+            'is_staff':{
+                'write_only': True,    
+            },
+            'clienteTipo':{
+                'write_only': True,    
+            }
+        }
 
         
 class Cliente_Estrella_Serializer(serializers.Serializer):
@@ -109,7 +134,7 @@ class ProductoSerializer(serializers.ModelSerializer):
         model = ProductoModel
         
         fields='__all__'
-
+        
 
 class DetallePedidoSerializer(serializers.ModelSerializer)  :
     producto = ProductoSerializer()

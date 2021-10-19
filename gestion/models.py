@@ -167,7 +167,7 @@ class AdopcionModel(models.Model):
     
     adopcionEstado=models.BooleanField(
         db_column='estado', default=True, null=False)
-    adopcionAnimal=models.IntegerField(choices=estadoAdoptado,db_column='estado_adoptado', null=False,default=2)
+    
 
     # place = models.OneToOneField(
     #     Place,

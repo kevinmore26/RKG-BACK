@@ -159,7 +159,7 @@ TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
 MEDIA_URL = '/assets/'
 MEDIA_ROOT = BASE_DIR / 'media'
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_METHODS = ['GET', 'POST']
+CORS_ALLOW_METHODS = ['GET', 'POST','PUT','DELETE']
 CORS_ALLOW_HEADERS = ['Content-Type', 'origin', 'Authorization', "accept", ]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
