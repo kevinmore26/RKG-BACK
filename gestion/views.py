@@ -93,28 +93,28 @@ class ProductoController(RetrieveUpdateDestroyAPIView):
             'content': data.data
         })
 
+    #! Delete para elimianar producto de la BD (comentado)
+    # def delete(self, request, id):
 
-    def delete(self, request, id):
+    #     productoEncontrado = self.get_queryset().filter(productoId=id).first()
+    #     if not productoEncontrado:
+    #         return Response(data={
+    #             'message': 'Producto no encontrado'
+    #         }, status=status.HTTP_404_NOT_FOUND)
 
-        productoEncontrado = self.get_queryset().filter(productoId=id).first()
-        if not productoEncontrado:
-            return Response(data={
-                'message': 'Producto no encontrado'
-            }, status=status.HTTP_404_NOT_FOUND)
-
-        try:
-            data = productoEncontrado.delete()
-            # print(str(productoEncontrado.productoFoto))
-            remove(settings.MEDIA_ROOT / str(productoEncontrado.productoFoto))
-        except Exception as e:
-            print(e)
+    #     try:
+    #         data = productoEncontrado.delete()
+    #         # print(str(productoEncontrado.productoFoto))
+    #         remove(settings.MEDIA_ROOT / str(productoEncontrado.productoFoto))
+    #     except Exception as e:
+    #         print(e)
         
              
-        # data = ProductoModel.objects.filter(productoId=id).delete()
-        print(data)
-        return Response(data={
-            'message': 'Producto eliminado exitosamente'
-        })
+    #     # data = ProductoModel.objects.filter(productoId=id).delete()
+    #     print(data)
+    #     return Response(data={
+    #         'message': 'Producto eliminado exitosamente'
+    #     })
 
     def put(self, request: Request, id):
         #1 busco si el producto existe
@@ -144,9 +144,9 @@ class ProductoController(RetrieveUpdateDestroyAPIView):
                 "content": serializador.errors
             }, status=status.HTTP_400_BAD_REQUEST)
 
-    #! Delete para estado
+    #! Delete para cambiar a estado False al producto
     def delete(self, request, id):
-        # actualizacion del estado del producto
+        
         productoEncontrado: ProductoModel = ProductoModel.objects.filter(
             productoId=id).first()
 
@@ -156,8 +156,8 @@ class ProductoController(RetrieveUpdateDestroyAPIView):
                 "content": None
             }, status=status.HTTP_404_NOT_FOUND)
 
-        #modificar su estado a False
-        productoEncontrado.productoEstado = False
+        
+        productoEncontrado.productoDisponible = False
         productoEncontrado.save()
 
         serializador = ProductoSerializer(instance=productoEncontrado)
@@ -166,7 +166,7 @@ class ProductoController(RetrieveUpdateDestroyAPIView):
             "message": "Producto eliminado exitosamente",
             "content": serializador.data
         })
-        #return productoActualizado
+       
         
 
 class RegistroController (CreateAPIView):
