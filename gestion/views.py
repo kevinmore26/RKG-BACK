@@ -15,7 +15,8 @@ from .serializers import (
                           DetalleVentaSerializer,
                           Cliente_Estrella_Serializer,
                           PedidoSerializer,
-                          ClienteSerializer)
+                          ClienteSerializer,
+                          Producto_Estrella_Serializer)
 from django.db import connection
                         
 from rest_framework import status
@@ -508,6 +509,37 @@ class ClientesEspecialesController(APIView):
                     'celular':registro[5],
                     'is_staff':registro[6],
                     'cuenta':registro[7],
+                }
+                resultado_dic.append(diccionario)
+            print(resultado)
+            data = self.serializer_class(data= resultado_dic, many=True)
+            data.is_valid(raise_exception=True)
+            print(data.data)
+            return Response(data={
+            "message":None,
+            "content":data.data
+        })
+
+class ProductosEspecialesController(APIView):
+    # Cliente_Estrella_Serializer()
+    serializer_class = Producto_Estrella_Serializer
+    # print(serializer_class)
+    def get(self,request):
+        
+        # lista_clientes = ()
+        with connection.cursor() as cursor:
+            cursor.execute('select t2.id,t2.nombre,t2.foto,t2.precio,t2.descripcion,t2.disponible,count(*) as cantidad from public.detalles t1 join public.productos t2 on t1.producto_id = t2.id where disponible = true group by t2.id,t2.nombre, t2.foto,t2.precio,t2.descripcion,t2.cantidad order by cantidad desc limit 1')
+            resultado = cursor.fetchall()
+            resultado_dic=[]
+            for registro in resultado:
+                diccionario = {
+                    'id': registro[0],
+                    'nombre':registro[1],
+                    'foto':registro[2],
+                    'precio':registro[3],
+                    'descripcion':registro[4],
+                    'disponible':registro[5],
+                    'cantidad':registro[6],
                 }
                 resultado_dic.append(diccionario)
             print(resultado)

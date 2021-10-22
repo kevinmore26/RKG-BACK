@@ -92,6 +92,18 @@ class Cliente_Estrella_Serializer(serializers.Serializer):
     cuenta = serializers.IntegerField(required=True)
 
 
+        
+class Producto_Estrella_Serializer(serializers.Serializer):
+    id = serializers.IntegerField(required=True)
+    nombre = serializers.CharField(max_length=50,required=True)
+    foto = serializers.CharField(max_length=50,required=True)
+    precio = serializers.IntegerField(required=True)
+    descripcion = serializers.CharField(max_length=200,required=True)
+    
+    cantidad = serializers.IntegerField(required=True)
+    
+
+
 class DetalleVentaSerializer(serializers.Serializer):
     cantidad = serializers.IntegerField(required=True)
     producto_id = serializers.IntegerField(required=True)
