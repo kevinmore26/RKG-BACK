@@ -1,12 +1,17 @@
 from typing import List
 from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.core.files.base import equals_lf
 from rest_framework.views import APIView
 from django.db.models.query import QuerySet
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
+from django.db import reset_queries, transaction, Error
 from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
 from .models import  ProductoModel, clienteModel,AdopcionModel,clienteModel,DetallePedidoModel,PedidoModel
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.permissions import AllowAny, IsAdminUser,IsAuthenticated
 from .serializers import (
                           VentaSerializer,
                           AdopcionSerializer,
@@ -17,7 +22,9 @@ from .serializers import (
                           PedidoSerializer,
                           ClienteSerializer,
                           Producto_Estrella_Serializer,
-                          Producto_No_Estrella_Serializer)
+                          Producto_No_Estrella_Serializer,
+                          
+                          CustomPayloadSerializer)
 from django.db import connection
                         
 from rest_framework import status
@@ -446,6 +453,7 @@ class BuscadorPedidoController(RetrieveAPIView):
 # ---------------------------------------
 class BuscadorClienteController(RetrieveAPIView):
     serializer_class = ClienteSerializer
+    permission_classes = [IsAdminUser]
 
     def get(self, request: Request):
         nombre = request.query_params.get('nombre')
@@ -492,6 +500,7 @@ class OrdenesClienteController(RetrieveAPIView):
 class ClientesEspecialesController(APIView):
     # Cliente_Estrella_Serializer()
     serializer_class = Cliente_Estrella_Serializer
+    permission_classes = [IsAdminUser]
     # print(serializer_class)
     def get(self,request):
         
@@ -582,4 +591,45 @@ class ProductosNoEspecialesController(APIView):
             "message":"El producto menos vendido es 😥",
             "content":data.data
         })
+class CustomPayloadController(TokenObtainPairView):
+    """Sirve para modificar el payload de la token de acceso"""
+    permission_classes = [AllowAny]
+    serializer_class = CustomPayloadSerializer
 
+    def post(self, request):
+        data = self.serializer_class(data=request.data)
+        print(data)
+        if data.is_valid():
+            print(data.validated_data)
+            return Response(data={
+                "success": True,
+                "content": data.validated_data,
+                "message": "Login exitoso"
+            })
+
+        else:
+            return Response(data={
+                "success": False,
+                "content": data.errors,
+                "message": "error de generacion de la jwt"
+            })
+class PerfilUsuario(RetrieveAPIView):
+    
+    permission_classes = [IsAuthenticated]
+    
+    # serializer_class = ClienteSerializer
+    def get(self,request: Request ):            
+            print(request.user)
+            print(request.auth)
+            data = {
+                'clienteCorreo' : request.user.clienteCorreo,
+                'clienteNombre': request.user.clienteNombre,
+                'clienteApellido' : request.user.clienteApellido,
+                'clienteTipo': request.user.clienteTipo
+            }
+            # data = self.serializer_class(data = request.data)
+            return Response (data={
+                'message':'El usuario es',
+                'content':data
+                #  request.user
+            })

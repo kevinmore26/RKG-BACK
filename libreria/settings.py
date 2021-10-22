@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gestion',
     'rest_framework',
+    'rest_framework_simplejwt',
     'facturacion',
     'corsheaders',    
 ]
@@ -143,6 +144,11 @@ STATIC_URL = '/static/'
 SIMPLE_JWT = {
     'USER_ID_FIELD': 'clienteId',
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(hours=5),
+      # 'SIGNING_KEY':'mipassword',
+    # indicar cual es la PK del modelo de autenticacion
+    'USER_ID_FIELD': 'clienteId'
+
 }
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
