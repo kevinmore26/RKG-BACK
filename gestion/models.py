@@ -78,7 +78,7 @@ class clienteModel(AbstractBaseUser, PermissionsMixin):
     clienteTipo = models.IntegerField(choices=TIPO_USUARIO, db_column='tipo',null=False)
 
     clienteDocumento = models.CharField(
-         db_column='documento',max_length=9,unique=True
+         db_column='documento',max_length=9,unique=False
     )
     clienteCelular = models.IntegerField(
         null=True,unique=True,db_column='celular'
