@@ -13,7 +13,8 @@ from .views import (
                     BuscadorClienteController,
                     ClientesEspecialesController,
                     OrdenesClienteController,
-                    ProductosEspecialesController)
+                    ProductosEspecialesController,
+                    ProductosNoEspecialesController)
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
                     
@@ -35,6 +36,7 @@ urlpatterns = [
     path('buscar-pedido', BuscadorPedidoController.as_view()),
     path('buscar-orden-cliente', OrdenesClienteController.as_view()),
     path('producto-estrella', ProductosEspecialesController.as_view()),
+    path('producto-no-estrella', ProductosNoEspecialesController.as_view()),
     path('pedido', VentaController.as_view()),
    
 ]

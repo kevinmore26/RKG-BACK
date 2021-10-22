@@ -12,6 +12,7 @@ from django.conf import settings
 class RegistroSerializer( serializers.ModelSerializer):
     def save(self):
         clienteNombre =self.validated_data.get('clienteNombre')
+        clienteApellido =self.validated_data.get('clienteApellido')
         clienteDocumento = self.validated_data.get('clienteDocumento')
         clienteCelular = self.validated_data.get('clienteCelular')
         clienteCorreo = self.validated_data.get('clienteCorreo')
@@ -19,7 +20,7 @@ class RegistroSerializer( serializers.ModelSerializer):
         clienteTipo = self.validated_data.get('clienteTipo')
 
         perfilCliente =self.validated_data.get('perfilCliente')
-        nuevoCliente = clienteModel(clienteTipo=clienteTipo,clienteNombre=clienteNombre,clienteDocumento= clienteDocumento,clienteCelular=clienteCelular, clienteCorreo= clienteCorreo)
+        nuevoCliente = clienteModel(clienteTipo=clienteTipo,clienteNombre=clienteNombre,clienteApellido=clienteApellido,clienteDocumento= clienteDocumento,clienteCelular=clienteCelular, clienteCorreo= clienteCorreo)
         nuevoCliente.set_password(clientePassword)
         nuevoCliente.save()
         return nuevoCliente
@@ -94,6 +95,16 @@ class Cliente_Estrella_Serializer(serializers.Serializer):
 
         
 class Producto_Estrella_Serializer(serializers.Serializer):
+    id = serializers.IntegerField(required=True)
+    nombre = serializers.CharField(max_length=50,required=True)
+    foto = serializers.CharField(max_length=50,required=True)
+    precio = serializers.IntegerField(required=True)
+    descripcion = serializers.CharField(max_length=200,required=True)
+    
+    cantidad = serializers.IntegerField(required=True)
+
+        
+class Producto_No_Estrella_Serializer(serializers.Serializer):
     id = serializers.IntegerField(required=True)
     nombre = serializers.CharField(max_length=50,required=True)
     foto = serializers.CharField(max_length=50,required=True)
