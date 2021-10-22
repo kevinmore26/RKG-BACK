@@ -87,7 +87,7 @@ class Cliente_Estrella_Serializer(serializers.Serializer):
     apellido = serializers.CharField(max_length=50,required=False, allow_blank=True)
     email = serializers.EmailField(max_length=50,required=True)
     documento = serializers.CharField(max_length=8,required=True)
-    celular = serializers.CharField(max_length=8,required=False, allow_null=True)
+    celular = serializers.CharField(max_length=9,required=False, allow_null=True)
     is_staff = serializers.BooleanField(required=True)
     cuenta = serializers.IntegerField(required=True)
 

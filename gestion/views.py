@@ -470,7 +470,22 @@ class BuscadorClienteController(RetrieveAPIView):
             'content': data.data
         })
 
+class OrdenesClienteController(RetrieveAPIView):
+    serializer_class = PedidoSerializer
+    def get(self, request:Request):
+        ordenesEncontradas = None
+        cliente_id = request.query_params.get('cliente_id')
 
+        if cliente_id:
+            if ordenesEncontradas is not None:
+                ordenesEncontradas = ordenesEncontradas.objects.select_related().filter(cliente_id=cliente_id)
+            else:
+                ordenesEncontradas = PedidoModel.objects.select_related().filter(cliente_id=cliente_id)
+        data = self.serializer_class(instance=ordenesEncontradas, many=True)
+        return Response(data={
+            'message':'Ordenes',
+            'content':data.data
+        })
 
 class ClientesEspecialesController(APIView):
     # Cliente_Estrella_Serializer()
