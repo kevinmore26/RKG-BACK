@@ -633,3 +633,33 @@ class PerfilUsuario(RetrieveAPIView):
                 'content':data
                 #  request.user
             })
+class ClienteActualizarController(RetrieveUpdateDestroyAPIView):           
+    serializer_class = ClienteSerializer
+    queryset = clienteModel.objects.all()
+    
+    def put(self, request: Request,id):
+        clienteEncontrado = clienteModel.objects.filter(
+            clienteId=id).first()
+
+        if clienteEncontrado is None:
+            return Response(data={
+                "message": "Cliente no existe",
+                "content": None
+            }, status=status.HTTP_404_NOT_FOUND)
+
+        
+        serializador = ClienteSerializer(data=request.data)
+        if serializador.is_valid():
+            serializador.update(instance=clienteEncontrado, 
+                                validated_data=serializador.validated_data)
+
+           
+            return Response(data={
+                "message": "Cliente actualizado exitosamente",
+                "content": serializador.data
+            })
+        else:
+            return Response(data={
+                "message": "Error al actualizar el cliente",
+                "content": serializador.errors
+            }, status=status.HTTP_400_BAD_REQUEST)

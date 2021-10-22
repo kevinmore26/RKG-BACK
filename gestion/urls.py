@@ -16,7 +16,8 @@ from .views import (
                     ProductosEspecialesController,
                     ProductosNoEspecialesController,
                     CustomPayloadController,
-                    PerfilUsuario)
+                    PerfilUsuario,
+                    ClienteActualizarController)
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView,TokenVerifyView
                     
@@ -28,7 +29,7 @@ urlpatterns = [
     path('login',CustomPayloadController.as_view()),
     path('virify-toke',TokenVerifyView.as_view()),
     path('perfil_cliente',PerfilUsuario.as_view()),
-    # path('actualizar-cliente', ClienteActualizarController.as_view()),
+    path('actualizar-cliente/<int:id>', ClienteActualizarController.as_view()),
     path('buscar-cliente/', BuscadorClienteController.as_view()),
     path('cliente_especial',ClientesEspecialesController.as_view()),
     path('login', TokenObtainPairView.as_view()),
