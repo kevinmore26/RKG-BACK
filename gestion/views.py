@@ -1,8 +1,14 @@
 from typing import List
+from django.contrib.auth.models import User
+from django.core.files.base import equals_lf
 from django.shortcuts import render
+from django.utils.regex_helper import normalize
 from rest_framework import serializers
 from rest_framework.views import APIView, exception_handler
 from django.db.models.query import QuerySet
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.permissions import AllowAny, IsAdminUser,IsAuthenticated
+from .serializers import ActualizarSerializer, CustomPayloadSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
@@ -23,15 +29,14 @@ from .utils import  PaginacionPersonalizada
 from rest_framework.serializers import Serializer
 # import requests as solicitudes
 from os import environ
-from django.db import transaction, Error
+from django.db import reset_queries, transaction, Error
 from datetime import datetime
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from os import remove
 from django.db.models import ImageField
 from django.conf import settings
-
-
+from django.db import connection
 
 
 class PruebaController(APIView):
@@ -165,121 +170,102 @@ class RegistroController (CreateAPIView):
                 "content": data.errors
             })
 
-# class ClienteController(CreateAPIView):
-#     queryset = clienteModel.objects.all()
-#     serializer_class = RegistroSerializer
-
-#     def post(self, request: Request):
-
-#         data: Serializer = self.get_serializer(data=request.data)
-#         if data.is_valid():
-#             # .validated_data => es la data ya validada y se crea a raiz de la llamada al metodo is_valid()
-#             # .data => es la data sin validacion
-#             # .initial_data => data inicial tal y como me la esta pasando el cliente
-#             # print(data.validated_data)
-#             # print(data.initial_data)
-#             # print(data.data)
-#             documento = data.validated_data.get('clienteDocumento')
-#             direccion = data.validated_data.get('clienteDireccion')
-
-#             url = 'https://apiperu.dev/api/'
-#             if len(documento) == 8:
-#                 # si es DNI validar que en el body venga el clienteDireccion
-#                 if direccion is None:
-#                     return Response(data={
-#                         'message': 'Los clientes con DNI se debe proveer la direccion'
-#                     }, status=status.HTTP_400_BAD_REQUEST)
-#                 url += 'dni/'
-
-#             elif len(documento) == 11:
-#                 url += 'ruc/'
-
-#             resultado = solicitudes.get(url+documento, headers={
-#                 'Content-Type': 'application/json',
-#                 'Authorization': 'Bearer '+environ.get('APIPERU_TOKEN')
-#             })
-#             # print(resultado.json())
-#             success = resultado.json().get('success')
-
-#             # validar si el dni existe o no
-#             if success is False:
-#                 return Response(data={
-#                     'message': 'Documento incorrecto'
-#                 }, status=status.HTTP_400_BAD_REQUEST)
-
-#             data = resultado.json().get('data')
-#             nombre = data.get('nombre_completo') if data.get(
-#                 'nombre_completo') else data.get('nombre_o_razon_social')
-#             # hacer algo similar con la direccion
-#             # si la direccion no es vacia (tiene contenido ) su valor seguira siendo la direccion, caso contrario extraeremos la direccion del resultado de APIPERU
-#             direccion = direccion if direccion else data.get(
-#                 'direccion_completa')
-
-#             # guardado del cliente en la bd
-#             nuevoCliente = clienteModel(
-#                 clienteNombre=nombre, clienteDocumento=documento, clienteDireccion=direccion)
-
-#             nuevoCliente.save()
-
-#             nuevoClienteSerializado: Serializer = self.serializer_class(
-#                 instance=nuevoCliente)
-
-#             return Response(data={
-#                 'message': 'Cliente agregado exitosamente',
-#                 'content': nuevoClienteSerializado.data
-#             }, status=status.HTTP_201_CREATED)
-#         else:
-#             return Response(data={
-#                 'message': 'Error al ingresar el cliente',
-#                 'content': data.errors
-#             }, status=status.HTTP_400_BAD_REQUEST)
-
-
 class BuscadorClienteController(RetrieveAPIView):
     serializer_class = ClienteSerializer
-
+    permission_classes = [IsAdminUser] 
     def get(self, request: Request):
-        # print(request.query_params)
-        # primero validar si me esta pasando el nombre o el documento
         correo = request.query_params.get('correo')
         documento = request.query_params.get('dni')
-
-        # si tengo documento hare una busqueda todos los clientes por ese documento
         clienteEncontrado = None
         if documento:
             clienteEncontrado: QuerySet = clienteModel.objects.filter(
                 clienteDocumento=documento)
-
-            # data = self.serializer_class(instance=clienteEncontrado, many=True)
-
-            # return Response({'content': data.data})
-
         if correo:
-            # from django.db.models.functions import Upper
-            # resultado = ClienteModel.objects.annotate(
-            #     clienteNombre_upper=Upper('eduardo')).all()
-            # print(resultado)
-            # https://docs.djangoproject.com/en/3.2/ref/models/querysets/#field-lookups
             if clienteEncontrado is not None:
                 clienteEncontrado = clienteEncontrado.filter(
                     clienteCorreo__icontains=correo).all()
             else:
                 clienteEncontrado = clienteModel.objects.filter(
                     clienteCorreo__icontains=correo).all()
-
-        # TODO: 1. agregar los test para el cliente controler y su busqueda, 2. dar la opcion que se puedan enviar el documento y nombre a la vez y que se haga el filtro de ambos si es que provee
-
         data = self.serializer_class(instance=clienteEncontrado, many=True)
         return Response(data={
             'message': 'Los usuarios son:',
             'content': data.data
         })
+   
+    permission_classes=[IsAuthenticated]
+   
+    def put(self,request:Request):
+        correo = request.user.clienteCorreo
+        clienteEncontrado = clienteModel.objects.filter(clienteCorreo__icontains=correo).first()
+        print (clienteEncontrado)
+        # if clienteEncontrado is None:
+        #      return Response(data={
+        #         "message": "Cliente No existe",
+        #         "content": None
+        #     }, status=status.HTTP_404_NOT_FOUND)
+        data = ActualizarSerializer(data = request.data)
+        if data.data.clienteNombre is None:
+            data.data.clienteNombre = clienteEncontrado.nombre
+        if data.data.clienteApellido is None:
+            data.data.clienteApellido = clienteEncontrado.apellido
+        if data.data.clienteDocumento is None:
+            data.data.clienteDocumento = clienteEncontrado.documento
+        if data.data.clienteCelular is None:
+            data.data.clienteCelular = clienteEncontrado.celular
+        data.data.clienteCorreo = clienteEncontrado.email
+        data.data.password = clienteEncontrado.password
+        
+        print(data)
+        print(data.is_valid())
+        if data.is_valid():
+            data.update(instance=clienteEncontrado, 
+                                validated_data=data.validated_data)
+            #3 guarda y devuelve el producto actualizado
+            return Response(data={
+                "message": "Cliente actualizado exitosamente",
+                "content": data.data
+            })
+        else:
+            return Response(data={
+                "message": "Error al actualizar el cliente",
+                "content": data.errors
+            }, status=status.HTTP_400_BAD_REQUEST)    
+class ClienteActualizarController(RetrieveUpdateDestroyAPIView):
+    serializer_class = ClienteSerializer
+    queryset = clienteModel.objects.all()
+    def put(self, request: Request, id):
+        clienteEncontrado = clienteModel.objects.filter(
+            clienteId=id).first()
 
-from django.db import connection
+        if clienteEncontrado is None:
+            return Response(data={
+                "message": "Cliente no existe",
+                "content": None
+            }, status=status.HTTP_404_NOT_FOUND)
+
+        
+        serializador = ClienteSerializer(data=request.data)
+        if serializador.is_valid():
+            serializador.update(instance=clienteEncontrado, 
+                                validated_data=serializador.validated_data)
+
+           
+            return Response(data={
+                "message": "Cliente actualizado exitosamente",
+                "content": serializador.data
+            })
+        else:
+            return Response(data={
+                "message": "Error al actualizar el cliente",
+                "content": serializador.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+            
 class ClientesEspecialesController(APIView):
     # Cliente_Estrella_Serializer()
     serializer_class = Cliente_Estrella_Serializer
     # print(serializer_class)
+    permission_classes = [IsAdminUser]
     def get(self,request):
         
         # lista_clientes = ()
@@ -307,23 +293,29 @@ class ClientesEspecialesController(APIView):
             "message":None,
             "content":data.data
         })
-        lista_clientes: QuerySet = clienteModel.objects.raw('select t2.id,t2.nombre,t2.apellido,t2.email,t2.documento,t2.celular,t2.is_staff,count(*) as cuenta from public.pedidos t1 join public.clientes t2 on t1.cliente_id = t2.id where is_active = true group by t2.id,t2.nombre, t2.apellido,t2.email,t2.documento,t2.celular,t2.is_staff order by cuenta desc')
-        print(lista_clientes)
-        # lista_data = []
-        # # for data in lista_clientes:
-        #     lista_data.append(serializers.Serializer('json',data))
-        #     print(data)
-        data = self.serializer_class(instance=lista_clientes,many=False)
-        print(lista_clientes)        
-        
-        # except:
-        #     return Response(data={
-        #     "message": None,
-        #     "content": 'No se encontro información'
-        # })
 
-        
+class CustomPayloadController(TokenObtainPairView):
+    """Sirve para modificar el payload de la token de acceso"""
+    permission_classes = [AllowAny]
+    serializer_class = CustomPayloadSerializer
 
+    def post(self, request):
+        data = self.serializer_class(data=request.data)
+        print(data)
+        if data.is_valid():
+            print(data.validated_data)
+            return Response(data={
+                "success": True,
+                "content": data.validated_data,
+                "message": "Login exitoso"
+            })
+
+        else:
+            return Response(data={
+                "success": False,
+                "content": data.errors,
+                "message": "error de generacion de la jwt"
+            })
 
 class AdopcionesController(ListCreateAPIView):
     queryset = AdopcionModel.objects.all()
@@ -502,3 +494,23 @@ class VentaController(CreateAPIView):
                 'content': data.errors
             })
 
+class PerfilUsuario(RetrieveAPIView):
+    
+    permission_classes = [IsAuthenticated]
+    
+    # serializer_class = ClienteSerializer
+    def get(self,request: Request ):            
+            print(request.user)
+            print(request.auth)
+            data = {
+                'clienteCorreo' : request.user.clienteCorreo,
+                'clienteNombre': request.user.clienteNombre,
+                'clienteApellido' : request.user.clienteApellido,
+                'clienteTipo': request.user.clienteTipo
+            }
+            # data = self.serializer_class(data = request.data)
+            return Response (data={
+                'message':'El usuario es',
+                'content':data
+                #  request.user
+            })

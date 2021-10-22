@@ -90,7 +90,7 @@ class clienteModel(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'clienteCorreo'
 
     # es lo que pedira la consola cuando se llame al createsuperuser
-    REQUIRED_FIELDS = ['clienteNombre', 'clienteApellido', 'clienteTipo']
+    REQUIRED_FIELDS = ['clienteNombre', 'clienteApellido', 'clienteTipo','clienteDocumento','clienteCelular']
 
     class Meta:
         db_table = 'clientes'

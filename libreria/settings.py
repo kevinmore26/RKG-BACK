@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gestion',
     'rest_framework',
+    'rest_framework_simplejwt',
     'facturacion',
     'corsheaders',    
 ]
@@ -143,6 +144,11 @@ STATIC_URL = '/static/'
 SIMPLE_JWT = {
     'USER_ID_FIELD': 'clienteId',
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(hours=5),
+      # 'SIGNING_KEY':'mipassword',
+    # indicar cual es la PK del modelo de autenticacion
+    'USER_ID_FIELD': 'clienteId'
+
 }
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -159,7 +165,7 @@ TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
 MEDIA_URL = '/assets/'
 MEDIA_ROOT = BASE_DIR / 'media'
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_METHODS = ['GET', 'POST']
+CORS_ALLOW_METHODS = ['GET', 'POST','PUT']
 CORS_ALLOW_HEADERS = ['Content-Type', 'origin', 'Authorization', "accept", ]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
