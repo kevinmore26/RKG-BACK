@@ -636,7 +636,8 @@ class PerfilUsuario(RetrieveAPIView):
 class ClienteActualizarController(RetrieveUpdateDestroyAPIView):           
     serializer_class = ClienteSerializer
     queryset = clienteModel.objects.all()
-    def put(self, request: Request, id):
+    
+    def put(self, request: Request,id):
         clienteEncontrado = clienteModel.objects.filter(
             clienteId=id).first()
 
