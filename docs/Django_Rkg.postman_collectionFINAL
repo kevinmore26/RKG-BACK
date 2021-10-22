@@ -1,0 +1,657 @@
+{
+	"info": {
+		"_postman_id": "b9f90860-7d43-4d2e-a6fb-a5bcae90b3fc",
+		"name": "Django_Rkg",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "adopciones",
+			"item": [
+				{
+					"name": "/adopciones",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"adopcionNombre\":\"plomo\",\r\n    \"adopcionEdad\":\"5\",\r\n    \"adopcionTamaño\":\"m\",\r\n    \"adopcionCaracteristicas\":\"negromalo\",\r\n    \"adopcionFoto\":\"http://127.0.0.1:8000/assets/juguete2.png\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_local}}/gestion/adopciones/",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"adopciones",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adopciones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/adopciones/",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"adopciones",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adopcion/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/adopcion/1",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"adopcion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adopcion/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"adopcionNombre\":\"lalito\",\r\n    \"adopcionEdad\":\"4\",\r\n    \"adopcionTamaño\":\"M\",\r\n    \"adopcionCaracteristicas\":\"inquieto\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_local}}/gestion/adopcion/3",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"adopcion",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adopcion/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/adopcion/1",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"adopcion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/buscar-adoptado",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/buscar-adoptado?estado=true",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"buscar-adoptado"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/buscar-sinadoptar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/buscar-adoptado?estado=false",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"buscar-adoptado"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "imagenes",
+			"item": [
+				{
+					"name": "/subir-imagen",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "archivo",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": "/C:/Users/kore_/OneDrive/Escritorio/RKG-BACK/docs/MER_v2.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_local}}/gestion/subir-imagen/",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"subir-imagen",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "clientes",
+			"item": [
+				{
+					"name": "/registro",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clienteNombre\":\"molotov\",\r\n    \"clienteApellido\":\"ivan\",\r\n    \"clienteCorreo\":\"tomy_26028@hotmail.com\",\r\n    \"clienteTipo\":3,\r\n    \"clientePassword\":\"Welcome123!\",\r\n    \"clienteDocumento\":\"74827014\",\r\n    \"clienteCelular\":\"936056784\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/gestion/registro",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"gestion",
+								"registro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/buscar-cliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/buscar-cliente?nombre=lala",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"buscar-cliente"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "lala"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cliente-estrella",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/gestion/cliente_especial",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"gestion",
+								"cliente_especial"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actualizar-cliente",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clienteNombre\":\"mishifuy\",\r\n    \"clienteApellido\":\"ivan\",\r\n    \"clienteCorreo\":\"tomy_000@hotmail.com\",\r\n    \"clienteTipo\":3,\r\n    \"clientePassword\":\"Welcome123!\",\r\n    \"clienteDocumento\":\"98699994\",\r\n    \"clienteCelular\":\"990099994\"\r\n  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/gestion/registro",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"gestion",
+								"registro"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "productos",
+			"item": [
+				{
+					"name": "/productos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productoNombre\":\"plumilla\",\r\n    \"productoPrecio\": 14.00,\r\n    \"productoFoto\": \"http://127.0.0.1:8000/assets/juguete4.png\",\r\n    \"productoCantidad\":12,\r\n    \"productoDescripcion\":\"circular\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/gestion/productos/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"gestion",
+								"productos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/productos/",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"productos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/producto/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/producto/4",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"producto",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/producto/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productoNombre\":\"plumilla\",\r\n    \"productoPrecio\": 14.00,\r\n    \"productoFoto\": \"http://127.0.0.1:8000/assets/juguete4.png\",\r\n    \"productoCantidad\":12,\r\n    \"productoDescripcion\":\"cuadrado\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_local}}/gestion/producto/20",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"producto",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/producto/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/producto/1",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"producto",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pedidos_facturacion",
+			"item": [
+				{
+					"name": "/pedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cliente_id\": 2,\r\n    \"vendedor_id\": 1,\r\n    \"detalle\": [\r\n        {\r\n            \"cantidad\":6,\r\n            \"producto_id\": 1\r\n            \r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/gestion/pedido",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"gestion",
+								"pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/buscar-pedido",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/buscar-pedido?id=2",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"buscar-pedido"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/generar-comprobante",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pedidoId\": 1,\r\n    \"tipoComprobante\": \"BOLETA\",\r\n    \"numeroDocumento\": \"74822013\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/facturacion/generar-comprobante/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"facturacion",
+								"generar-comprobante",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/buscar-orden-cliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/buscar-orden-cliente?cliente_id=1",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"buscar-orden-cliente"
+							],
+							"query": [
+								{
+									"key": "cliente_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/producto-estrella",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/producto-estrella",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"producto-estrella"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/producto-menos-vendido",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/producto-no-estrella",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"producto-no-estrella"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "/perfil_cliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url_local",
+			"value": "127.0.0.1:8000"
+		}
+	]
+}

@@ -453,7 +453,7 @@ class BuscadorPedidoController(RetrieveAPIView):
 # ---------------------------------------
 class BuscadorClienteController(RetrieveAPIView):
     serializer_class = ClienteSerializer
-    permission_classes = [IsAdminUser]
+    
 
     def get(self, request: Request):
         nombre = request.query_params.get('nombre')
@@ -500,7 +500,7 @@ class OrdenesClienteController(RetrieveAPIView):
 class ClientesEspecialesController(APIView):
     # Cliente_Estrella_Serializer()
     serializer_class = Cliente_Estrella_Serializer
-    permission_classes = [IsAdminUser]
+    
     # print(serializer_class)
     def get(self,request):
         
