@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"adopcionNombre\":\"BLANCO\",\r\n    \"adopcionEdad\":\"5\",\r\n    \"adopcionTamaño\":\"P\",\r\n    \"adopcionCaracteristicas\":\"comelona\",\r\n    \"adopcionFoto\":\"http://127.0.0.1:8000/assets/juguete1.png\"\r\n}",
+							"raw": "{\r\n    \"adopcionNombre\":\"plomo\",\r\n    \"adopcionEdad\":\"5\",\r\n    \"adopcionTamaño\":\"m\",\r\n    \"adopcionCaracteristicas\":\"negromalo\",\r\n    \"adopcionFoto\":\"http://127.0.0.1:8000/assets/juguete2.png\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -191,18 +191,19 @@
 								{
 									"key": "archivo",
 									"type": "file",
-									"src": "/C:/Users/kore_/OneDrive/Escritorio/RKG-BACK/media/juguete3.png"
+									"src": "/C:/Users/kore_/OneDrive/Escritorio/RKG-BACK/docs/MER_v2.png"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{url_local}}/gestion/subir-imagen",
+							"raw": "{{url_local}}/gestion/subir-imagen/",
 							"host": [
 								"{{url_local}}"
 							],
 							"path": [
 								"gestion",
-								"subir-imagen"
+								"subir-imagen",
+								""
 							]
 						}
 					},
@@ -220,7 +221,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"clienteNombre\":\"kevinsdadsadasd\",\r\n    \"clienteApellido\":\"moivanre\",\r\n    \"clienteCorreo\":\"kore_1491@hotmail.com\",\r\n    \"clienteTipo\":3,\r\n    \"clientePassword\":\"Welcome123!\",\r\n    \"clienteDocumento\":\"74823094\"\r\n}",
+							"raw": "{\r\n    \"clienteNombre\":\"molotov\",\r\n    \"clienteApellido\":\"ivan\",\r\n    \"clienteCorreo\":\"tomy_26028@hotmail.com\",\r\n    \"clienteTipo\":3,\r\n    \"clientePassword\":\"Welcome123!\",\r\n    \"clienteDocumento\":\"74827014\",\r\n    \"clienteCelular\":\"936056784\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -289,6 +290,15 @@
 								"cliente_especial"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
 					},
 					"response": []
 				}
@@ -373,6 +383,15 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productoNombre\":\"plumilla\",\r\n    \"productoPrecio\": 14.00,\r\n    \"productoFoto\": \"http://127.0.0.1:8000/assets/juguete4.png\",\r\n    \"productoCantidad\":12,\r\n    \"productoDescripcion\":\"cuadrado\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{url_local}}/gestion/producto/20",
 							"host": [
@@ -495,6 +514,66 @@
 								"facturacion",
 								"generar-comprobante",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/buscar-orden-cliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/buscar-orden-cliente?cliente_id=1",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"buscar-orden-cliente"
+							],
+							"query": [
+								{
+									"key": "cliente_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/producto-estrella",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/producto-estrella",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"producto-estrella"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/producto-menos-vendido",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/gestion/producto-no-estrella",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"producto-no-estrella"
 							]
 						}
 					},
