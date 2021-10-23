@@ -453,7 +453,7 @@ class BuscadorPedidoController(RetrieveAPIView):
 # ---------------------------------------
 class BuscadorClienteController(RetrieveAPIView):
     serializer_class = ClienteSerializer
-    
+    permission_classes = [IsAdminUser]
 
     def get(self, request: Request):
         nombre = request.query_params.get('nombre')
@@ -479,6 +479,7 @@ class BuscadorClienteController(RetrieveAPIView):
             'message': 'Los usuarios son:',
             'content': data.data
         })
+    # permission_classes=[IsAuthenticated]
 
 class OrdenesClienteController(RetrieveAPIView):
     serializer_class = PedidoSerializer
@@ -500,7 +501,8 @@ class OrdenesClienteController(RetrieveAPIView):
 class ClientesEspecialesController(APIView):
     # Cliente_Estrella_Serializer()
     serializer_class = Cliente_Estrella_Serializer
-    
+    permission_classes = [IsAdminUser]
+
     # print(serializer_class)
     def get(self,request):
         
@@ -533,6 +535,7 @@ class ClientesEspecialesController(APIView):
 class ProductosEspecialesController(APIView):
     # Cliente_Estrella_Serializer()
     serializer_class = Producto_Estrella_Serializer
+    permission_classes = [IsAdminUser]
     # print(serializer_class)
     def get(self,request):
         
@@ -564,6 +567,7 @@ class ProductosEspecialesController(APIView):
 class ProductosNoEspecialesController(APIView):
     # Cliente_Estrella_Serializer()
     serializer_class = Producto_No_Estrella_Serializer
+    permission_classes = [IsAdminUser]
     # print(serializer_class)
     def get(self,request):
         
