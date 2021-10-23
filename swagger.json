@@ -5,7 +5,7 @@
     "title": "Django Rkg",
     "contact": {}
   },
-  "host": "127.0.0.1:8000",
+  "host": "https://rkg-backend.herokuapp.com/",
   "schemes": [
     "http"
   ],
