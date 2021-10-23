@@ -11,10 +11,9 @@ schema_view = get_schema_view(
         title = "😼 API de RKG 🐶",
         default_version = "v1",
         description = "Bienvenido a la API de MascotitasRKG 👳‍♂️🧨",
-        terms_of_service = "https://www.google.com",
+        
         contact = openapi.Contact(email="kore_2608@hotmail.com"),
         
-        license = openapi.License(name="MIT", url="https://es.wikipedia.org/wiki/Licencia_MIT")
     ),
     public = True,
     permission_classes = ( permissions.AllowAny, ),
