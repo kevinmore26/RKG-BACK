@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_swagger',
     'facturacion',
-    'corsheaders',    
+    'corsheaders',
+    'drf_yasg',    
 ]
 
 
