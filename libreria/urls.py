@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib import admin
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('gestion/', include('gestion.urls')),
     path('facturacion/', include('facturacion.urls')),
     
