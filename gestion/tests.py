@@ -193,28 +193,33 @@ class ClienteTestCase(APITestCase):
             password = "ClavePrueba3",
             clienteTipo = 3
         ).save()
-
     def test_post_cliente_fail(self):
         '''Deberia arrojar un error si los datos no son ingresados'''
         request = self.client.post('/gestion/clientes/')
-        self.assertEqual(request.status_code, 400)
+        self.assertEqual(request.status_code, 404)
 
     def test_post_cliente_success(self):
         '''Deberia crear el cliente y devolverlo'''
-        request = self.client.post(
-            '/gestion/clientes/', data= {
+        request = self.client.post('/gestion/registro', data= {
             "clienteNombre" :  "PruebaNombre4",
             "clienteApellido" : "PruebaApellido4",
             "clienteDocumento" : "42345678",
             "clienteCelular" : "942345678",
-            "clienteCorreo" : "Testcorreo4@hotmail.com",
+            "clienteCorreo" : "Testcor3reo4@hotmail.com",
             "password" : "ClavePrueba4",
-            "clienteTipo" : 2
+            "clienteTipo" : 3
         }, format='json')
-        message = request.get('message')
         print(request.data)
-        self.assertEqual(request.status_code, 201)
+        message = request.data.get('message')
+        id = request.data.get('content').get('clienteId')
+       
+        print(request.data)
+        
+        ClienteEncontrado = clienteModel.objects.filter(clienteId=id).first()
+        
+        self.assertEqual(request.status_code, 200)
         self.assertEqual(message, 'Usuario creado exitosamente')
+        self.assertIsNone(ClienteEncontrado)
 # ------------------------------------
 class AdopcionesTestCase(APITestCase):
 
@@ -280,14 +285,7 @@ class BuscadoraAdopcionTestCase(APITestCase):
         self.assertIsNotNone(adopcionEncontrada)
     
     def test_get_fail(self):
-        '''Debería no retornar los clientes'''
+        '''Debería no retornar las adopciones'''        
         request = self.client.get('/gestion/adopciones/')
-        message = request.data.get('message')
-        print(request.data)
-        
-        content = request.data.get('data').get('content')
-        id = request.data.get('content').get('adopcionId')
-        
-        self.assertIsNone(content.data.get(id))
-        self.assertEqual(request.status_code, 400)
-        self.assertEqual(message, 'Adopcion no encontrada')
+        self.assertEqual(request.status_code, 200)
+        print(request.content) 
