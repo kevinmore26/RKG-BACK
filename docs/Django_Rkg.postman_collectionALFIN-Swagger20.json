@@ -218,34 +218,6 @@
             "headers": {}
           }
         }
-      },
-      "put": {
-        "summary": "/actualizar-cliente",
-        "tags": [
-          "clientes"
-        ],
-        "operationId": "/actualizar-cliente",
-        "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/~1actualizar-cliente-request"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        }
       }
     },
     "/buscar-cliente": {
@@ -288,6 +260,36 @@
           "application/json"
         ],
         "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/gestion/actualizar-cliente/3": {
+      "put": {
+        "summary": "/actualizar-cliente",
+        "tags": [
+          "clientes"
+        ],
+        "operationId": "/actualizar-cliente",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/~1actualizar-cliente-request"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -366,7 +368,7 @@
         }
       }
     },
-    "/producto/20": {
+    "/producto/13": {
       "put": {
         "summary": "/producto/{id}",
         "tags": [
@@ -574,7 +576,7 @@
         }
       }
     },
-    "/": {
+    "/login": {
       "post": {
         "summary": "/login",
         "tags": [
@@ -585,14 +587,26 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/~1loginrequest"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
             "headers": {}
           }
         }
-      },
+      }
+    },
+    "/": {
       "get": {
         "summary": "/perfil_cliente",
         "tags": [
@@ -730,11 +744,11 @@
       "example": {
         "clienteNombre": "mishifuy",
         "clienteApellido": "ivan",
-        "clienteCorreo": "tomy_000@hotmail.com",
+        "clienteCorreo": "tomy_00w0@hotmail.com",
         "clienteTipo": 3,
         "clientePassword": "Welcome123!",
-        "clienteDocumento": "98699994",
-        "clienteCelular": "990099994"
+        "clienteCelular": "990999994",
+        "clienteDocumento": "74820015"
       },
       "type": "object",
       "properties": {
@@ -754,10 +768,10 @@
         "clientePassword": {
           "type": "string"
         },
-        "clienteDocumento": {
+        "clienteCelular": {
           "type": "string"
         },
-        "clienteCelular": {
+        "clienteDocumento": {
           "type": "string"
         }
       },
@@ -767,8 +781,8 @@
         "clienteCorreo",
         "clienteTipo",
         "clientePassword",
-        "clienteDocumento",
-        "clienteCelular"
+        "clienteCelular",
+        "clienteDocumento"
       ]
     },
     "/productosrequest": {
@@ -926,6 +940,26 @@
         "pedidoId",
         "tipoComprobante",
         "numeroDocumento"
+      ]
+    },
+    "/loginrequest": {
+      "title": "/loginrequest",
+      "example": {
+        "clienteCorreo": "tomy_1000@hotmail.com",
+        "password": "Welcome123!"
+      },
+      "type": "object",
+      "properties": {
+        "clienteCorreo": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "clienteCorreo",
+        "password"
       ]
     }
   },

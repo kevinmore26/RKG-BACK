@@ -64,18 +64,26 @@
         }
       }
     },
-    "/gestion/adopcion/1": {
+    "/gestion/adopcion/{id}": {
       "get": {
-        "summary": "/adopcion/{id}",
+        "summary": "/adopcion/{id2}",
         "tags": [
           "adopciones"
         ],
-        "operationId": "/adopcion/{id}",
+        "operationId": "/adopcion/{id2}",
         "deprecated": false,
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -84,38 +92,51 @@
         }
       },
       "delete": {
-        "summary": "/adopcion/{id}1",
+        "summary": "/adopcion/{id2}1",
         "tags": [
           "adopciones"
         ],
-        "operationId": "/adopcion/{id}1",
-        "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        }
-      }
-    },
-    "/gestion/adopcion/3": {
-      "put": {
-        "summary": "/adopcion/{id}",
-        "tags": [
-          "adopciones"
-        ],
-        "operationId": "Put/adopcion/{id}",
+        "operationId": "/adopcion/{id2}1",
         "deprecated": false,
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "Body",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      },
+      "put": {
+        "summary": "/adopcion/{id1}",
+        "tags": [
+          "adopciones"
+        ],
+        "operationId": "Put/adopcion/{id1}",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "body",
             "in": "body",
             "required": true,
             "description": "",
@@ -188,84 +209,6 @@
         }
       }
     },
-    "/gestion/registro": {
-      "post": {
-        "summary": "/registro",
-        "tags": [
-          "clientes"
-        ],
-        "operationId": "/registro",
-        "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/~1registrorequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        }
-      }
-    },
-    "/gestion/buscar-cliente": {
-      "get": {
-        "summary": "/buscar-cliente",
-        "tags": [
-          "clientes"
-        ],
-        "operationId": "/buscar-cliente",
-        "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "nombre",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": ""
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        }
-      }
-    },
-    "/gestion/cliente_especial": {
-      "get": {
-        "summary": "/cliente-estrella",
-        "tags": [
-          "clientes"
-        ],
-        "operationId": "/cliente-estrella",
-        "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        }
-      }
-    },
     "/gestion/productos/": {
       "post": {
         "summary": "/productos",
@@ -316,7 +259,7 @@
         }
       }
     },
-    "/gestion/producto/4": {
+    "/gestion/producto/{id}": {
       "get": {
         "summary": "/producto/{id}",
         "tags": [
@@ -327,47 +270,76 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
             "headers": {}
           }
         }
-      }
-    },
-    "/gestion/producto/20": {
+      },
       "put": {
-        "summary": "/producto/{id}1",
+        "summary": "/producto/{id}",
         "tags": [
           "productos"
         ],
-        "operationId": "/producto/{id}1",
+        "operationId": "/producto/{id1}",
         "deprecated": false,
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/~1productosrequest"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
             "headers": {}
           }
         }
-      }
-    },
-    "/gestion/producto/1": {
+      },
       "delete": {
-        "summary": "/producto/{id}2",
+        "summary": "/producto/{id2}",
         "tags": [
           "productos"
         ],
-        "operationId": "/producto/{id}2",
+        "operationId": "/producto/{id2}",
         "deprecated": false,
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -464,17 +436,144 @@
           }
         }
       }
+    },
+    "/gestion/buscar-orden-cliente": {
+      "get": {
+        "summary": "/buscar-orden-cliente",
+        "tags": [
+          "pedidos_facturacion"
+        ],
+        "operationId": "/buscar-orden-cliente",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cliente_id",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/gestion/producto-estrella": {
+      "get": {
+        "summary": "/producto-estrella",
+        "tags": [
+          "pedidos_facturacion"
+        ],
+        "operationId": "/producto-estrella",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/gestion/producto-no-estrella": {
+      "get": {
+        "summary": "/producto-menos-vendido",
+        "tags": [
+          "pedidos_facturacion"
+        ],
+        "operationId": "/producto-menos-vendido",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/gestion/login": {
+      "post": {
+        "summary": "/login",
+        "tags": [
+          "login"
+        ],
+        "operationId": "/login",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/~1loginrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/gestion/perfil_cliente": {
+      "get": {
+        "summary": "/perfil_cliente",
+        "tags": [
+          "login"
+        ],
+        "operationId": "/perfil_cliente",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer{token}",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
     }
   },
   "definitions": {
     "/adopcionesrequest": {
       "title": "/adopcionesrequest",
       "example": {
-        "adopcionNombre": "BLANCO",
+        "adopcionNombre": "plomo",
         "adopcionEdad": "5",
-        "adopcionTamaño": "P",
-        "adopcionCaracteristicas": "comelona",
-        "adopcionFoto": "http://127.0.0.1:8000/assets/juguete1.png"
+        "adopcionTamaño": "m",
+        "adopcionCaracteristicas": "negromalo",
+        "adopcionFoto": "http://127.0.0.1:8000/assets/juguete2.png"
       },
       "type": "object",
       "properties": {
@@ -508,7 +607,8 @@
         "adopcionNombre": "lalito",
         "adopcionEdad": "4",
         "adopcionTamaño": "M",
-        "adopcionCaracteristicas": "inquieto"
+        "adopcionCaracteristicas": "inquieto",
+        "adopcionFoto": "http://127.0.0.1:8000/assets/juguete2.png"
       },
       "type": "object",
       "properties": {
@@ -535,12 +635,13 @@
     "/registrorequest": {
       "title": "/registrorequest",
       "example": {
-        "clienteNombre": "kevinsdadsadasd",
-        "clienteApellido": "moivanre",
-        "clienteCorreo": "kore_1491@hotmail.com",
+        "clienteNombre": "molotov",
+        "clienteApellido": "ivan",
+        "clienteCorreo": "tomy_26028@hotmail.com",
         "clienteTipo": 3,
         "clientePassword": "Welcome123!",
-        "clienteDocumento": "74823094"
+        "clienteDocumento": "74827014",
+        "clienteCelular": "936056784"
       },
       "type": "object",
       "properties": {
@@ -562,6 +663,9 @@
         },
         "clienteDocumento": {
           "type": "string"
+        },
+        "clienteCelular": {
+          "type": "string"
         }
       },
       "required": [
@@ -570,6 +674,53 @@
         "clienteCorreo",
         "clienteTipo",
         "clientePassword",
+        "clienteDocumento",
+        "clienteCelular"
+      ]
+    },
+    "/actualizar-cliente-request": {
+      "title": "/actualizar-cliente-request",
+      "example": {
+        "clienteNombre": "mishifuy",
+        "clienteApellido": "ivan",
+        "clienteCorreo": "tomy_00w0@hotmail.com",
+        "clienteTipo": 3,
+        "clientePassword": "Welcome123!",
+        "clienteCelular": "990999994",
+        "clienteDocumento": "74820015"
+      },
+      "type": "object",
+      "properties": {
+        "clienteNombre": {
+          "type": "string"
+        },
+        "clienteApellido": {
+          "type": "string"
+        },
+        "clienteCorreo": {
+          "type": "string"
+        },
+        "clienteTipo": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "clientePassword": {
+          "type": "string"
+        },
+        "clienteCelular": {
+          "type": "string"
+        },
+        "clienteDocumento": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "clienteNombre",
+        "clienteApellido",
+        "clienteCorreo",
+        "clienteTipo",
+        "clientePassword",
+        "clienteCelular",
         "clienteDocumento"
       ]
     },
@@ -581,6 +732,43 @@
         "productoFoto": "http://127.0.0.1:8000/assets/juguete4.png",
         "productoCantidad": 12,
         "productoDescripcion": "circular"
+      },
+      "type": "object",
+      "properties": {
+        "productoNombre": {
+          "type": "string"
+        },
+        "productoPrecio": {
+          "type": "number",
+          "format": "double"
+        },
+        "productoFoto": {
+          "type": "string"
+        },
+        "productoCantidad": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "productoDescripcion": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "productoNombre",
+        "productoPrecio",
+        "productoFoto",
+        "productoCantidad",
+        "productoDescripcion"
+      ]
+    },
+    "/producto/{id}request": {
+      "title": "/producto/{id}request",
+      "example": {
+        "productoNombre": "plumilla",
+        "productoPrecio": 14,
+        "productoFoto": "http://127.0.0.1:8000/assets/juguete4.png",
+        "productoCantidad": 12,
+        "productoDescripcion": "cuadrado"
       },
       "type": "object",
       "properties": {
@@ -670,9 +858,9 @@
     "/generar-comprobante-request": {
       "title": "/generar-comprobante-request",
       "example": {
-        "pedidoId": 1,
+        "pedidoId": 6,
         "tipoComprobante": "BOLETA",
-        "numeroDocumento": "74822013"
+        "numeroDocumento": "02721477"
       },
       "type": "object",
       "properties": {
@@ -692,6 +880,26 @@
         "tipoComprobante",
         "numeroDocumento"
       ]
+    },
+    "/loginrequest": {
+      "title": "/loginrequest",
+      "example": {
+        "clienteCorreo": "tomy_1000@hotm2ail.com",
+        "password": "Welcome123!"
+      },
+      "type": "object",
+      "properties": {
+        "clienteCorreo": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "clienteCorreo",
+        "password"
+      ]
     }
   },
   "tags": [
@@ -709,6 +917,9 @@
     },
     {
       "name": "pedidos_facturacion"
+    },
+    {
+      "name": "login"
     }
   ]
 }

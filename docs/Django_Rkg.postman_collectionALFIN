@@ -300,7 +300,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"clienteNombre\":\"mishifuy\",\r\n    \"clienteApellido\":\"ivan\",\r\n    \"clienteCorreo\":\"tomy_000@hotmail.com\",\r\n    \"clienteTipo\":3,\r\n    \"clientePassword\":\"Welcome123!\",\r\n    \"clienteDocumento\":\"98699994\",\r\n    \"clienteCelular\":\"990099994\"\r\n  \r\n}",
+							"raw": "{\r\n    \"clienteNombre\":\"mishifuy\",\r\n    \"clienteApellido\":\"ivan\",\r\n    \"clienteCorreo\":\"tomy_00w0@hotmail.com\",\r\n    \"clienteTipo\":3,\r\n    \"clientePassword\":\"Welcome123!\",\r\n    \"clienteCelular\":\"990999994\",\r\n     \"clienteDocumento\":\"74820015\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -308,7 +308,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/gestion/registro",
+							"raw": "http://127.0.0.1:8000/gestion/actualizar-cliente/3",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -319,7 +319,8 @@
 							"port": "8000",
 							"path": [
 								"gestion",
-								"registro"
+								"actualizar-cliente",
+								"3"
 							]
 						}
 					},
@@ -416,14 +417,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{url_local}}/gestion/producto/20",
+							"raw": "{{url_local}}/gestion/producto/13",
 							"host": [
 								"{{url_local}}"
 							],
 							"path": [
 								"gestion",
 								"producto",
-								"20"
+								"13"
 							]
 						}
 					},
@@ -612,7 +613,25 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"url": null
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clienteCorreo\":\"tomy_1000@hotmail.com\",\r\n    \"password\":\"Welcome123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_local}}/gestion/login",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"gestion",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},

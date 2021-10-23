@@ -71,18 +71,19 @@ class clienteModel(AbstractBaseUser, PermissionsMixin):
 
     clienteApellido = models.CharField(
         max_length=50, db_column='apellido', verbose_name='Apellido del usuario')
-
-    clienteCorreo = models.EmailField(
-        max_length=50, db_column='email', unique=True)
-
-    clienteTipo = models.IntegerField(choices=TIPO_USUARIO, db_column='tipo',null=False)
-
     clienteDocumento = models.CharField(
          db_column='documento',max_length=9,unique=False
     )
     clienteCelular = models.IntegerField(
         null=True,unique=True,db_column='celular'
     )
+    clienteCorreo = models.EmailField(
+        max_length=50, db_column='email', unique=True)
+    password = models.TextField(null=True)
+    clienteTipo = models.IntegerField(choices=TIPO_USUARIO, db_column='tipo',null=False)
+
+    
+    
     password = models.TextField(null=True)
 
     is_staff = models.BooleanField(default=False)
