@@ -48,9 +48,11 @@ INSTALLED_APPS = [
     'gestion',
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework_swagger',
     'facturacion',
     'corsheaders',    
 ]
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
