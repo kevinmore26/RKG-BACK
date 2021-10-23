@@ -209,6 +209,121 @@
         }
       }
     },
+    "/gestion/registro": {
+      "post": {
+        "summary": "/registro",
+        "tags": [
+          "clientes"
+        ],
+        "operationId": "/registro",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/~1registrorequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/gestion/buscar-cliente": {
+      "get": {
+        "summary": "/buscar-cliente",
+        "tags": [
+          "clientes"
+        ],
+        "operationId": "/buscar-cliente",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "nombre",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/gestion/cliente_especial": {
+      "get": {
+        "summary": "/cliente-estrella",
+        "tags": [
+          "clientes"
+        ],
+        "operationId": "/cliente-estrella",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/gestion/actualizar-cliente/{id}": {
+      "put": {
+        "summary": "/actualizar-cliente",
+        "tags": [
+          "clientes"
+        ],
+        "operationId": "/actualizar-cliente",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/~1actualizar-cliente-request"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
     "/gestion/productos/": {
       "post": {
         "summary": "/productos",
@@ -683,11 +798,11 @@
       "example": {
         "clienteNombre": "mishifuy",
         "clienteApellido": "ivan",
-        "clienteCorreo": "tomy_00w0@hotmail.com",
+        "clienteCorreo": "toy2_00w0@hotmail.com",
         "clienteTipo": 3,
         "clientePassword": "Welcome123!",
-        "clienteCelular": "990999994",
-        "clienteDocumento": "74820015"
+        "clienteCelular": "98999999",
+        "clienteDocumento": "74820010"
       },
       "type": "object",
       "properties": {
