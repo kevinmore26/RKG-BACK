@@ -8,12 +8,12 @@ from drf_yasg import openapi
 from rest_framework import permissions
 schema_view = get_schema_view(
     openapi.Info(
-        title = "API de gestion de minimarket",
+        title = "😼 API de RKG 🐶",
         default_version = "v1",
-        description = "API usando DRF para el manejo de un minimarket con varios almacenes",
+        description = "Bienvenido a la API de MascotitasRKG 👳‍♂️🧨",
         terms_of_service = "https://www.google.com",
-        contact = openapi.Contact(email="ederiveroman@gmail.com"),
-        # https://es.wikipedia.org/wiki/Licencia_de_software
+        contact = openapi.Contact(email="kore_2608@hotmail.com"),
+        
         license = openapi.License(name="MIT", url="https://es.wikipedia.org/wiki/Licencia_MIT")
     ),
     public = True,
