@@ -57,7 +57,7 @@ git clone https://github.com/kevinmore26/RKG-BACK
 pip install -r requirements.txt
 ```
 
-4. Procede con el siguiente comando para crear las migraciones(en el caso de haber migraciones, eliminarlas, ya que usted no las tiene en una base de datos, lanzandole error)
+4. Procede con el siguiente comando para crear las migraciones
 ```
 python manage.py makemigrations gestion --name <nombre_migracion>
 ```
