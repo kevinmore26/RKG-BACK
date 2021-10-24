@@ -254,6 +254,13 @@
           {
             "name": "nombre",
             "in": "query",
+            "required": false,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "documento",
+            "in": "query",
             "required": true,
             "type": "string",
             "description": ""

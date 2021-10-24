@@ -11,9 +11,7 @@ schema_view = get_schema_view(
         title = "😼 API de RKG 🐶",
         default_version = "v1",
         description = "Bienvenido a la API de MascotitasRKG 👳‍♂️🧨",
-        
         contact = openapi.Contact(email="kore_2608@hotmail.com"),
-        
     ),
     public = True,
     permission_classes = ( permissions.AllowAny, ),

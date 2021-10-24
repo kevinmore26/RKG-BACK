@@ -25,8 +25,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     
-    path('registro', RegistroController.as_view()),
-    
+    path('registro', RegistroController.as_view()), 
     path('login',CustomPayloadController.as_view()),
     path('virify-toke',TokenVerifyView.as_view()),
     path('perfil_cliente',PerfilUsuario.as_view()),
