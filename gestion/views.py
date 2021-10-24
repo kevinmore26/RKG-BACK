@@ -667,3 +667,38 @@ class ClienteActualizarController(RetrieveUpdateDestroyAPIView):
                 "message": "Error al actualizar el cliente",
                 "content": serializador.errors
             }, status=status.HTTP_400_BAD_REQUEST)
+class FiltrosProductosController(RetrieveAPIView):
+    serializer_class = ProductoSerializer
+    def get(self, request:Request):
+        id = request.query_params.get('id')
+        nombre = request.query_params.get('nombre')
+        precio = request.query_params.get('precio')
+        created_at = request.query_params.get('created_at')
+        
+        productoEncontrado = None
+
+        if id:
+            productoEncontrado: QuerySet = ProductoModel.objects.filter(productoId=id)
+        if nombre:
+            if productoEncontrado is not None:
+                productoEncontrado = productoEncontrado.filter(productoNombre__icontains=nombre).all()
+            else:
+                productoEncontrado = ProductoModel.objects.filter(productoNombre__icontains=nombre).all()
+        if precio:
+            if productoEncontrado is not None:
+                productoEncontrado = productoEncontrado.filter(productoPrecio__icontains=precio).alL()
+            else:
+                productoEncontrado = ProductoModel.objects.filter(productoPrecio__icontains=precio).all()
+        if created_at:
+            if productoEncontrado is not None:
+                productoEncontrado = productoEncontrado.filter(created_At__icontains=created_at).alL()
+            else:
+                productoEncontrado = ProductoModel.objects.filter(created_At__icontains=created_at).all()
+   
+        
+        data = self.serializer_class(instance=productoEncontrado, many=True)
+    
+        return Response(data={
+            'message':'Productos:',
+            'content':data.data
+        })
