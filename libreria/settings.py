@@ -87,7 +87,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'libreria.wsgi.application'
+# WSGI_APPLICATION = 'libreria.wsgi.application'
 
 
 # Database
