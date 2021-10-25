@@ -535,7 +535,7 @@ class ClientesEspecialesController(APIView):
 class ProductosEspecialesController(APIView):
     # Cliente_Estrella_Serializer()
     serializer_class = Producto_Estrella_Serializer
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
     # print(serializer_class)
     def get(self,request):
         
