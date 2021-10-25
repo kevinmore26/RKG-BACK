@@ -42,3 +42,4 @@ class ComprobanteController(ListCreateAPIView):
 
     def get(self, request):
         pass
+
