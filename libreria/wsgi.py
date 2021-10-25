@@ -1,5 +1,5 @@
 """
-WSGI config for libreria project.
+  config for libreria project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
