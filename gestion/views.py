@@ -564,6 +564,9 @@ class ProductosEspecialesController(APIView):
             "content":data.data
         })
 
+# --------------------------------------------------------------
+
+
 class ProductosNoEspecialesController(APIView):
     # Cliente_Estrella_Serializer()
     serializer_class = Producto_No_Estrella_Serializer
