@@ -501,14 +501,14 @@ class OrdenesClienteController(RetrieveAPIView):
 class ClientesEspecialesController(APIView):
     # Cliente_Estrella_Serializer()
     serializer_class = Cliente_Estrella_Serializer
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
 
     # print(serializer_class)
     def get(self,request):
         
         # lista_clientes = ()
         with connection.cursor() as cursor:
-            cursor.execute('select t2.id,t2.nombre,t2.apellido,t2.email,t2.documento,t2.celular,t2.is_staff,count(*) as cuenta from public.pedidos t1 join public.clientes t2 on t1.cliente_id = t2.id where is_active = true group by t2.id,t2.nombre, t2.apellido,t2.email,t2.documento,t2.celular,t2.is_staff order by cuenta desc')
+            cursor.execute('select t2.id,t2.nombre,t2.apellido,t2.email,t2.documento,t2.celular,t2.is_staff,count(*) as cuenta from public.pedidos t1 join public.clientes t2 on t1.cliente_id = t2.id where is_active = true group by t2.id,t2.nombre, t2.apellido,t2.email,t2.documento,t2.celular,t2.is_staff order by cuenta desc limit 3')
             resultado = cursor.fetchall()
             resultado_dic=[]
             for registro in resultado:
@@ -535,13 +535,13 @@ class ClientesEspecialesController(APIView):
 class ProductosEspecialesController(APIView):
     # Cliente_Estrella_Serializer()
     serializer_class = Producto_Estrella_Serializer
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
     # print(serializer_class)
     def get(self,request):
         
         # lista_clientes = ()
         with connection.cursor() as cursor:
-            cursor.execute('select t2.id,t2.nombre,t2.foto,t2.precio,t2.descripcion,t2.disponible,count(*) as cantidad from public.detalles t1 join public.productos t2 on t1.producto_id = t2.id where disponible = true group by t2.id,t2.nombre, t2.foto,t2.precio,t2.descripcion,t2.cantidad order by cantidad desc limit 1')
+            cursor.execute('select t2.id,t2.nombre,t2.foto,t2.precio,t2.descripcion,t2.disponible,count(*) as cantidad from public.detalles t1 join public.productos t2 on t1.producto_id = t2.id where disponible = true group by t2.id,t2.nombre, t2.foto,t2.precio,t2.descripcion,t2.cantidad order by cantidad desc limit 5')
             resultado = cursor.fetchall()
             resultado_dic=[]
             for registro in resultado:
