@@ -142,9 +142,9 @@ class DetallePedidoModel(models.Model):
 class AdopcionModel(models.Model):
 
     class OpcionesUM(models.TextChoices):
-        PEQUEÑO = 'P', 'PEQUEÑO' 
-        MEDIANO = 'M', 'MEDIANO' 
-        GRANDE = 'G', 'GRANDE' 
+        PEQUEÑO = 'PEQUEÑO', 'P' 
+        MEDIANO = 'MEDIANO', 'M' 
+        GRANDE = 'GRANDE', 'G' 
 
     estadoAdoptado = [(1,'ADOPTADO'),(2,'NO_ADOPTADO')]
 
