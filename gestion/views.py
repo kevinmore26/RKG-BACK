@@ -232,7 +232,7 @@ class AdopcionController(RetrieveUpdateDestroyAPIView):
         serializador = AdopcionSerializer(instance=adopcionEncontrada)
         return Response(data={
             "message": "Adopcion encontrada",
-            "content": serializador.data
+            "content": [serializador.data] | {serializador.data}
         },status=status.HTTP_200_OK)
 
     def put(self, request: Request, id):
@@ -703,5 +703,38 @@ class FiltrosProductosController(RetrieveAPIView):
     
         return Response(data={
             'message':'Productos:',
+            'content':data.data
+        })
+
+
+class FiltrosAdopcionesController(RetrieveAPIView):
+    serializer_class = AdopcionSerializer
+    def get(self, request:Request):
+        id = request.query_params.get('id')
+        nombre = request.query_params.get('nombre')
+        tamanio=request.query_params.get('tamanio')
+        
+        adopcionEncontrada = None
+
+        if id:
+            adopcionEncontrada: QuerySet = AdopcionModel.objects.filter(padopcionId=id)
+        if nombre:
+            if adopcionEncontrada is not None:
+                adopcionEncontrada = adopcionEncontrada.filter(adopcionNombre__icontains=nombre).all()
+            else:
+                adopcionEncontrada = AdopcionModel.objects.filter(adopcionNombre__icontains=nombre).all()
+
+        if tamanio:
+            if adopcionEncontrada is not None:
+                adopcionEncontrada = adopcionEncontrada.filter(adopcionTamanio__icontains=tamanio).all()
+            else:
+                adopcionEncontrada = AdopcionModel.objects.filter(adopcionTamanio__icontains=tamanio).all()
+        
+   
+        
+        data = self.serializer_class(instance=adopcionEncontrada, many=True)
+    
+        return Response(data={
+            'message':'Adopciones:',
             'content':data.data
         })
