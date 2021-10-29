@@ -179,6 +179,7 @@ class CustomPayloadSerializer(TokenObtainPairSerializer):
     def get_token(cls, user: clienteModel):
         token = super(CustomPayloadSerializer, cls).get_token(user)
         # print(token)
+        token['user_id'] = user.clienteId
         token['user_email'] = user.clienteCorreo
         token['user_nombre'] = user.clienteNombre
         token['user_apellido'] = user.clienteApellido
