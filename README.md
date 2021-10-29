@@ -1,4 +1,7 @@
 
+![Sin título-1](https://user-images.githubusercontent.com/84250823/139501999-35b1a740-1975-45af-813c-72653f564bcf.jpg)
+
+ 
  <p align="center" style="background-color:white">
  <a href="![logo](https://user-images.githubusercontent.com/84250823/136850833-c994078c-cea3-40b7-b725-9f794ea3e130.jpg)" rel="noopener">
  <img src="https://user-images.githubusercontent.com/84250823/136850833-c994078c-cea3-40b7-b725-9f794ea3e130.jpg" alt="RAVN logo"></a>
@@ -11,10 +14,16 @@
 AUTORES 💻 :
 
 >  _Kevin More_ 😎
+                                                                 
+![2giphy](https://user-images.githubusercontent.com/84250823/139501774-37575b6b-0578-46cd-9cdd-c2fbfe4f240d.gif)
 
 >  _Renzo Estrada_ 😎
+
+![1giphy](https://user-images.githubusercontent.com/84250823/139501690-52b857e9-6c00-4fac-b215-54c64cce4c83.gif)
  
 >  _Guillermo Mujica_ 😎
+                                                                 
+![3giphy](https://user-images.githubusercontent.com/84250823/139501883-e5778b5c-e810-43f4-9709-5e4bec168582.gif)
 
 ### Idea del proyecto 😼:
 La idea principal es tener un ecommerce enfocado a las
@@ -27,19 +36,26 @@ mascotas, respecto a las ideas secundarias estarían enfocadas a un apartado de 
 
 #### Tecnologías:
 >Base de datos: postgres
->
+<img src="https://img.icons8.com/color/48/000000/postgreesql.png"/>
+                                                                 
 >Frameworks : Django
->
+<img src="https://img.icons8.com/color/48/000000/django.png"/>
+                                                            
 >Editor de código: VisualCode
->
+<img src="https://img.icons8.com/color/48/000000/visual-studio-code-2019.png"/>
+                                                                             
 >Lector de base de datos : DataGrip
->
+<img src="https://img.icons8.com/color/48/000000/pixel-cat.png"/>
+                                                                                                                                                       
 >Repositorio : GitHub
->
+<img src="https://img.icons8.com/color-glass/48/000000/github.png"/>
+                                                                  
 >Tester: Postman
->
+<img src="https://img.icons8.com/dusk/64/000000/postman-api.png"/>
+                                                                
 >Diagramador del MER: MySQL WorkBench
->
+<img src="https://img.icons8.com/color/48/000000/mysql-logo.png"/>
+                                                                
 >Canal de comunicación: Discord, Whatsapp, llamadas telefónicas
 >
 # Instrucciones
@@ -74,5 +90,9 @@ python manage.py migrate gestion
 ```
 python manage.py runserver
 ```
+8. Listo
+
+![44giphy](https://user-images.githubusercontent.com/84250823/139502617-6d5c9d7c-0243-4641-9e72-c56318cf561d.gif)
+
 
 
