@@ -82,8 +82,6 @@ class clienteModel(AbstractBaseUser, PermissionsMixin):
     password = models.TextField(null=True)
     clienteTipo = models.IntegerField(choices=TIPO_USUARIO, db_column='tipo',null=False)
 
-    clienteDireccion = models.CharField(max_length=50, db_column='direccion',verbose_name='Dirección del usuario',null=True)
-
     
     
     password = models.TextField(null=True)
